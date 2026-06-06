@@ -1,0 +1,359 @@
+[
+  {
+    "model": "accounts.user",
+    "pk": "9f116514-411a-464a-9111-c11111111111",
+    "fields": {
+      "email": "client1@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "client",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-01T10:00:00Z",
+      "last_login_ip": "192.168.1.10",
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "2a226524-422a-4122-9222-222222222222",
+    "fields": {
+      "email": "client2@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "client",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-02T11:00:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "google",
+      "oauth2_id": "google_12345"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "3a336534-433a-4333-9333-333333333333",
+    "fields": {
+      "email": "client3@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "client",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-03T12:00:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "4a446544-4444-4444-9444-444444444444",
+    "fields": {
+      "email": "client4@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "client",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-04T13:00:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "5a556555-4555-4555-9555-555555555555",
+    "fields": {
+      "email": "client5@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "client",
+      "is_staff": false,
+      "is_active": false,
+      "is_deleted": false,
+      "date_joined": "2026-05-05T14:00:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "1d116514-411a-4111-9111-111111111111",
+    "fields": {
+      "email": "driver1@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "driver",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-01T08:00:00Z",
+      "last_login_ip": "172.20.10.2",
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "2d226524-422a-4222-9222-222222222222",
+    "fields": {
+      "email": "driver2@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "driver",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-02T09:30:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "3d336534-433a-4333-9333-333333333333",
+    "fields": {
+      "email": "driver3@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "driver",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-03T10:15:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "4d446544-4444-4444-9444-444444444444",
+    "fields": {
+      "email": "driver4@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "driver",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-04T11:45:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "5d556555-4555-4555-9555-555555555555",
+    "fields": {
+      "email": "driver5@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "driver",
+      "is_staff": false,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-05-05T12:00:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "1e116514-411a-4111-9111-111111111111",
+    "fields": {
+      "email": "staff1@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "staff",
+      "is_staff": true,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-04-01T09:00:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "2e226524-422a-4222-9222-222222222222",
+    "fields": {
+      "email": "staff2@example.com",
+      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "role": "staff",
+      "is_staff": true,
+      "is_active": true,
+      "is_deleted": false,
+      "date_joined": "2026-04-15T14:30:00Z",
+      "last_login_ip": null,
+      "oauth2_provider": "",
+      "oauth2_id": ""
+    }
+  },
+  {
+    "model": "accounts.clientprofile",
+    "pk": "9f116514-411a-464a-9111-c11111111111",
+    "fields": {
+      "first_name": "Іван",
+      "last_name": "Петренко",
+      "gender": 1,
+      "date_birth": "1995-03-15"
+    }
+  },
+  {
+    "model": "accounts.clientprofile",
+    "pk": "2a226524-422a-4122-9222-222222222222",
+    "fields": {
+      "first_name": "Марія",
+      "last_name": "Коваленко",
+      "gender": 2,
+      "date_birth": "1998-07-22"
+    }
+  },
+  {
+    "model": "accounts.clientprofile",
+    "pk": "3a336534-433a-4333-9333-333333333333",
+    "fields": {
+      "first_name": "Олександр",
+      "last_name": "Козлов",
+      "gender": 1,
+      "date_birth": "1990-11-05"
+    }
+  },
+  {
+    "model": "accounts.clientprofile",
+    "pk": "4a446544-4444-4444-9444-444444444444",
+    "fields": {
+      "first_name": "Олена",
+      "last_name": "Бойко",
+      "gender": 2,
+      "date_birth": "2001-02-18"
+    }
+  },
+  {
+    "model": "accounts.clientprofile",
+    "pk": "5a556555-4555-4555-9555-555555555555",
+    "fields": {
+      "first_name": "Дмитро",
+      "last_name": "Шевченко",
+      "gender": 1,
+      "date_birth": "1988-09-30"
+    }
+  },
+  {
+    "model": "accounts.driverprofile",
+    "pk": "1d116514-411a-4111-9111-111111111111",
+    "fields": {
+      "first_name": "Сергій",
+      "last_name": "Ткаченко",
+      "gender": 1,
+      "date_birth": "1992-04-12",
+      "is_child_friendly": true,
+      "is_pet_friendly": true,
+      "is_smoke_friendly": false,
+      "is_music_friendly": true,
+      "is_talking_friendly": true,
+      "has_charger": true,
+      "has_aux": true,
+      "is_verified": true,
+      "is_active_driver": true
+    }
+  },
+  {
+    "model": "accounts.driverprofile",
+    "pk": "2d226524-422a-4222-9222-222222222222",
+    "fields": {
+      "first_name": "Андрій",
+      "last_name": "Kpaвчeнкo",
+      "gender": 1,
+      "date_birth": "1985-08-24",
+      "is_child_friendly": false,
+      "is_pet_friendly": false,
+      "is_smoke_friendly": true,
+      "is_music_friendly": false,
+      "is_talking_friendly": false,
+      "has_charger": true,
+      "has_aux": false,
+      "is_verified": true,
+      "is_active_driver": true
+    }
+  },
+  {
+    "model": "accounts.driverprofile",
+    "pk": "3d336534-433a-4333-9333-333333333333",
+    "fields": {
+      "first_name": "Анна",
+      "last_name": "Лисенко",
+      "gender": 2,
+      "date_birth": "1994-01-19",
+      "is_child_friendly": true,
+      "is_pet_friendly": false,
+      "is_smoke_friendly": false,
+      "is_music_friendly": true,
+      "is_talking_friendly": true,
+      "has_charger": false,
+      "has_aux": true,
+      "is_verified": true,
+      "is_active_driver": true
+    }
+  },
+  {
+    "model": "accounts.driverprofile",
+    "pk": "4d446544-4444-4444-9444-444444444444",
+    "fields": {
+      "first_name": "Максим",
+      "last_name": "Мельник",
+      "gender": 1,
+      "date_birth": "1997-06-14",
+      "is_child_friendly": false,
+      "is_pet_friendly": true,
+      "is_smoke_friendly": false,
+      "is_music_friendly": true,
+      "is_talking_friendly": true,
+      "has_charger": true,
+      "has_aux": true,
+      "is_verified": true,
+      "is_active_driver": true
+    }
+  },
+  {
+    "model": "accounts.driverprofile",
+    "pk": "5d556555-4555-4555-9555-555555555555",
+    "fields": {
+      "first_name": "Віталій",
+      "last_name": "Мороз",
+      "gender": 1,
+      "date_birth": "1991-10-10",
+      "is_child_friendly": true,
+      "is_pet_friendly": true,
+      "is_smoke_friendly": false,
+      "is_music_friendly": true,
+      "is_talking_friendly": false,
+      "has_charger": false,
+      "has_aux": false,
+      "is_verified": false,
+      "is_active_driver": false
+    }
+  },
+  {
+    "model": "accounts.staffprofile",
+    "pk": "1e116514-411a-4111-9111-111111111111",
+    "fields": {
+      "first_name": "Адмін",
+      "last_name": "Головний",
+      "gender": 0,
+      "date_birth": "1989-12-01"
+    }
+  },
+  {
+    "model": "accounts.staffprofile",
+    "pk": "2e226524-422a-4222-9222-222222222222",
+    "fields": {
+      "first_name": "Модератор",
+      "last_name": "Перший",
+      "gender": 0,
+      "date_birth": "1993-05-15"
+    }
+  }
+]

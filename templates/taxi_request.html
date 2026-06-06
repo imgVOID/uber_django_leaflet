@@ -1,0 +1,211 @@
+{% load django_bootstrap5 %}
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Request Taxi</title>
+    {% bootstrap_css %}
+    <style>
+      body { background: #eef2f5; }
+      .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+      .card { width: 640px; padding: 28px; }
+      .form-label { font-weight: 600; }
+      /* Style for address autocomplete search results */
+      .search-results { max-height: 150px; overflow-y: auto; z-index: 1000; position: absolute; width: 100%; shadow: 0 4px 6px rgba(0,0,0,0.1); }
+      .search-results .list-group-item { cursor: pointer; }
+      .search-results .list-group-item:hover { background-color: #f1f3f5; }
+      .position-relative-container { position: relative; }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <div class="card shadow-sm bg-white rounded">
+        <h2 class="h5 mb-3">Request a Taxi</h2>
+        <p class="small text-muted">Enter details to find available drivers nearby.</p>
+
+        <form id="taxiForm">
+          {% csrf_token %}
+          <div class="row g-3">
+            
+            <div class="col-12 position-relative-container">
+              <label for="from_addr" class="form-label">From</label>
+              <div class="input-group">
+                <input id="from_addr" class="form-control" placeholder="Pickup address or coordinates" required />
+                <button id="checkFromBtn" type="button" class="btn btn-outline-primary" title="Verify pickup address">Check</button>
+                <button id="useLocationBtn" type="button" class="btn btn-outline-secondary" title="Use my location">Use my location</button>
+              </div>
+              <div id="fromResults" class="list-group search-results d-none"></div>
+            </div>
+            
+            <div class="col-12 position-relative-container">
+              <label for="to_addr" class="form-label">Where</label>
+              <div class="input-group">
+                <input id="to_addr" class="form-control" placeholder="Destination address" required />
+                <button id="checkToBtn" type="button" class="btn btn-outline-primary" title="Verify destination address">Check</button>
+              </div>
+              <div id="toResults" class="list-group search-results d-none"></div>
+            </div>
+            
+            <div class="col-12 d-flex justify-content-between align-items-center">
+              <small id="status" class="text-muted"></small>
+              <button type="submit" class="btn btn-primary px-4">Find Drivers</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="mt-4 pt-3 border-top">
+          <h6 class="mb-1 text-secondary small">Last Request Trace</h6>
+          <pre id="last" class="small text-break bg-light p-2 rounded">No requests yet.</pre>
+        </div>
+      </div>
+    </div>
+
+    {% bootstrap_javascript %}
+    <script>
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
+      const form = document.getElementById('taxiForm');
+      const status = document.getElementById('status');
+      const last = document.getElementById('last');
+
+      function showLast() {
+        const data = localStorage.getItem('last_taxi_request');
+        last.textContent = data ? data : 'No requests yet.';
+      }
+      showLast();
+
+      // Nominatim OpenStreetMap API Geocoding Handler
+      async function verifyAddress(inputElement, resultsContainerElement) {
+        const query = inputElement.value.trim();
+        if (!query) {
+          status.textContent = 'Please enter an address to check.';
+          return;
+        }
+
+        // Prevent treating already formatted coordinates as a text query
+        const coordRegex = /^-?\d+\.\d+,\s*-?\d+\.\d+$/;
+        if (coordRegex.test(query)) {
+          status.textContent = 'Coordinates detected. No text search needed.';
+          return;
+        }
+
+        status.textContent = 'Searching OpenStreetMap...';
+        resultsContainerElement.innerHTML = '';
+        resultsContainerElement.classList.add('d-none');
+
+        try {
+          // Explicitly fallback to Kyiv context to improve query accuracy
+          const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5`;
+          const response = await fetch(url, {
+            headers: { 'Accept-Language': 'en' } // Request names in English
+          });
+
+          if (!response.ok) throw new Error('Network response code error');
+          
+          const data = await response.json();
+          
+          if (data.length === 0) {
+            status.textContent = 'No matching address found on OpenStreetMap.';
+            return;
+          }
+
+          status.textContent = `Found ${data.length} matches. Choose one below.`;
+          resultsContainerElement.classList.remove('d-none');
+
+          data.forEach(item => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'list-group-item list-group-item-action small text-truncate';
+            btn.textContent = item.display_name;
+            
+            // On click: save exact coordinates to input value and hide container
+            btn.addEventListener('click', () => {
+              inputElement.value = `${parseFloat(item.lat).toFixed(5)}, ${parseFloat(item.lon).toFixed(5)}`;
+              resultsContainerElement.classList.add('d-none');
+              resultsContainerElement.innerHTML = '';
+              status.textContent = 'Address verified and set to coordinates.';
+            });
+            resultsContainerElement.appendChild(btn);
+          });
+
+        } catch (err) {
+          status.textContent = 'Error connecting to OpenStreetMap API.';
+        }
+      }
+
+      // Event listeners for Check buttons
+      document.getElementById('checkFromBtn').addEventListener('click', () => {
+        verifyAddress(document.getElementById('from_addr'), document.getElementById('fromResults'));
+      });
+
+      document.getElementById('checkToBtn').addEventListener('click', () => {
+        verifyAddress(document.getElementById('to_addr'), document.getElementById('toResults'));
+      });
+
+      // Close dropdowns when clicking outside the fields
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.position-relative-container')) {
+          document.getElementById('fromResults').classList.add('d-none');
+          document.getElementById('toResults').classList.add('d-none');
+        }
+      });
+
+      // Geolocation handling
+      const useBtn = document.getElementById('useLocationBtn');
+      useBtn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          status.textContent = 'Geolocation not supported.';
+          return;
+        }
+        status.textContent = 'Requesting location...';
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          const { latitude: lat, longitude: lng, accuracy } = pos.coords;
+          
+          document.getElementById('from_addr').value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+          
+          try {
+            const token = getCookie('csrftoken');
+            const r = await fetch('/taxi/set_location/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': token,
+              },
+              body: JSON.stringify({ lat, lng, accuracy, timestamp: pos.timestamp }),
+            });
+            if (r.ok) {
+              status.textContent = 'Location saved.';
+              localStorage.setItem('user_location', JSON.stringify({lat, lng, accuracy}));
+            } else {
+              status.textContent = 'Failed to sync backend location.';
+            }
+          } catch (err) {
+            status.textContent = 'Network error saving location.';
+          }
+        }, (err) => {
+          status.textContent = 'Error: ' + err.message;
+        }, { enableHighAccuracy: true, timeout: 10000 });
+      });
+
+      // Submit handling: Save inputs and redirect immediately to map
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const from = document.getElementById('from_addr').value.trim();
+        const to = document.getElementById('to_addr').value.trim();
+        
+        if (!from || !to) return;
+        
+        const payload = { from, to, when: new Date().toISOString() };
+        localStorage.setItem('last_taxi_request', JSON.stringify(payload, null, 2));
+        
+        status.textContent = 'Redirecting to map...';
+        window.location.href = '/taxi/map/';
+      });
+    </script>
+  </body>
+</html>

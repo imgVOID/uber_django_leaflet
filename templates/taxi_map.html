@@ -1,0 +1,119 @@
+{% load static %}
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nearby Drivers Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+      html, body, #map { height: 100%; margin: 0; padding: 0; }
+      .map-wrap { height: 100vh; }
+      .leaflet-control-custom { background: white; padding: 8px; border-radius: 4px; box-shadow: 0 1px 5px rgba(0,0,0,0.4); }
+      .btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
+      .btn-success { background: #198754; color: white; margin-right: 6px; }
+      .btn-secondary { background: #6c757d; color: white; }
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map-wrap"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      const NOMINATIM_UA = 'UberDjangoLeafletMVP/1.0';
+
+      // Геокодування: перетворює текст на координати
+      async function geocode(query) {
+        const coordMatch = query.trim().match(/^(-?\d+(?:\.\d+)?)[,\s]+(-?\d+(?:\.\d+)?)$/);
+        if (coordMatch) {
+          return { lat: parseFloat(coordMatch[1]), lng: parseFloat(coordMatch[2]) };
+        }
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+        const res = await fetch(url, { headers: { 'Accept-Language': 'en', 'User-Agent': NOMINATIM_UA } });
+        const arr = await res.json();
+        if (!arr || arr.length === 0) throw new Error('Location not found');
+        return { lat: parseFloat(arr[0].lat), lng: parseFloat(arr[0].lon) };
+      }
+
+      // Побудова маршруту через бекенд (proxy до OSRM)
+      async function osrmRoute(start, end) {
+        const url = `/taxi/osrm_route/?start_lat=${start.lat}&start_lng=${start.lng}&end_lat=${end.lat}&end_lng=${end.lng}`;
+        const r = await fetch(url);
+        if (!r.ok) throw new Error('Route request failed');
+        const data = await r.json();
+        return data;
+      }
+
+      // Отримання списку водіїв з вашого Django-бекнду
+      async function fetchNearbyDrivers(lat, lng, radius_km=5) {
+        const resp = await fetch(`/taxi/nearby_drivers/?lat=${lat}&lng=${lng}&radius_km=${radius_km}`);
+        if (!resp.ok) return [];
+        const data = await resp.json();
+        return data.drivers || [];
+      }
+
+      // Кнопки керування на карті
+      function createControlButtons(map, onOk, onEdit) {
+        const control = L.control({position: 'topright'});
+        control.onAdd = function() {
+          const div = L.DomUtil.create('div', 'leaflet-control-custom');
+          div.innerHTML = '<button id="okBtn" class="btn btn-success">Confirm Ride</button><button id="editBtn" class="btn btn-secondary">Edit</button>';
+          return div;
+        };
+        control.addTo(map);
+        setTimeout(() => {
+          document.getElementById('okBtn').onclick = onOk;
+          document.getElementById('editBtn').onclick = onEdit;
+        }, 100);
+      }
+
+      // Головна ініціалізація
+      (async function() {
+        const raw = localStorage.getItem('last_taxi_request');
+        if (!raw) { window.location.href = '/taxi/'; return; }
+        
+        const req = JSON.parse(raw);
+        let start, end;
+        
+        try {
+          start = await geocode(req.from);
+          end = await geocode(req.to);
+        } catch (err) {
+          alert('Error resolving addresses.');
+          window.location.href = '/taxi/';
+          return;
+        }
+
+        const map = L.map('map').setView([start.lat, start.lng], 13);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(map);
+
+        // Маркери старту та фінішу
+        L.marker([start.lat, start.lng]).addTo(map).bindPopup('Pickup');
+        L.marker([end.lat, end.lng]).addTo(map).bindPopup('Destination');
+
+        // 1. Додавання водіїв на карту
+        const drivers = await fetchNearbyDrivers(start.lat, start.lng, 5);
+        drivers.forEach(d => {
+          L.circleMarker([d.lat, d.lng], {
+            radius: 8,
+            color: '#ff00ff',    
+            weight: 3,           
+            fillColor: d.color,   
+            fillOpacity: 1       
+          })
+          .addTo(map)
+          .bindPopup(`<b>${d.driver_name}</b><br>Dist: ${d.distance_km} km`);
+        });
+
+        // 2. Додавання маршруту
+        try {
+          const route = await osrmRoute(start, end);
+          L.geoJSON(route.geometry, { style: { color: '#0d6efd', weight: 5 } }).addTo(map);
+          map.fitBounds([ [start.lat, start.lng], [end.lat, end.lng] ]);
+        } catch (e) { console.warn('Route failed', e); }
+
+        createControlButtons(map, () => alert('Ride requested!'), () => window.location.href = '/taxi/');
+      })();
+    </script>
+  </body>
+</html>

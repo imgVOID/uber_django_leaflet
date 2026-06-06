@@ -1,0 +1,362 @@
+[
+  {
+    "model": "vehicles.vehicle",
+    "pk": 1,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "brand": "Toyota",
+      "model": "Camry",
+      "color": "#000000",
+      "license_plate": "AA1111AA",
+      "year": 2021,
+      "vehicle_type": "sedan",
+      "capacity": 4,
+      "registration_date": "2024-01-15",
+      "is_available": true,
+      "created_at": "2026-06-01T10:00:00Z",
+      "updated_at": "2026-06-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 2,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "brand": "Hyundai",
+      "model": "Tucson",
+      "color": "#808080",
+      "license_plate": "AA2222BB",
+      "year": 2022,
+      "vehicle_type": "suv",
+      "capacity": 4,
+      "registration_date": "2024-03-20",
+      "is_available": true,
+      "created_at": "2026-06-01T11:15:00Z",
+      "updated_at": "2026-06-01T11:15:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 3,
+    "fields": {
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "brand": "Volkswagen",
+      "model": "Golf",
+      "color": "#0000FF",
+      "license_plate": "AM3333CC",
+      "year": 2019,
+      "vehicle_type": "hatchback",
+      "capacity": 4,
+      "registration_date": "2023-08-12",
+      "is_available": true,
+      "created_at": "2026-06-01T12:30:00Z",
+      "updated_at": "2026-06-01T12:30:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 4,
+    "fields": {
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "brand": "Mercedes-Benz",
+      "model": "Vito",
+      "color": "#FFFFFF",
+      "license_plate": "BC4444DD",
+      "year": 2020,
+      "vehicle_type": "van",
+      "capacity": 8,
+      "registration_date": "2024-05-10",
+      "is_available": true,
+      "created_at": "2026-06-01T14:00:00Z",
+      "updated_at": "2026-06-01T14:00:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 5,
+    "fields": {
+      "driver": "5d556555-4555-4555-9555-555555555555",
+      "brand": "Ford",
+      "model": "F-150",
+      "color": "#FF0000",
+      "license_plate": "AE5555EE",
+      "year": 2021,
+      "vehicle_type": "truck",
+      "capacity": 5,
+      "registration_date": "2024-02-18",
+      "is_available": false,
+      "created_at": "2026-06-01T15:22:00Z",
+      "updated_at": "2026-06-01T15:22:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 6,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "brand": "Honda",
+      "model": "Accord",
+      "color": "#C0C0C0",
+      "license_plate": "AI6666FF",
+      "year": 2020,
+      "vehicle_type": "sedan",
+      "capacity": 4,
+      "registration_date": "2023-11-05",
+      "is_available": true,
+      "created_at": "2026-06-02T09:10:00Z",
+      "updated_at": "2026-06-02T09:10:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 7,
+    "fields": {
+      "driver": null,
+      "brand": "Kia",
+      "model": "Sportage",
+      "color": "#FFFFFF",
+      "license_plate": "AA7777GG",
+      "year": 2023,
+      "vehicle_type": "suv",
+      "capacity": 4,
+      "registration_date": "2025-01-22",
+      "is_available": true,
+      "created_at": "2026-06-02T10:45:00Z",
+      "updated_at": "2026-06-02T10:45:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 8,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "brand": "Renault",
+      "model": "Megane",
+      "color": "#8B4513",
+      "license_plate": "AH8888HH",
+      "year": 2018,
+      "vehicle_type": "hatchback",
+      "capacity": 4,
+      "registration_date": "2023-04-14",
+      "is_available": true,
+      "created_at": "2026-06-02T13:15:00Z",
+      "updated_at": "2026-06-02T13:15:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 9,
+    "fields": {
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "brand": "Volkswagen",
+      "model": "Transporter",
+      "color": "#000000",
+      "license_plate": "AX9999II",
+      "year": 2019,
+      "vehicle_type": "van",
+      "capacity": 7,
+      "registration_date": "2023-09-30",
+      "is_available": true,
+      "created_at": "2026-06-02T16:40:00Z",
+      "updated_at": "2026-06-02T16:40:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 10,
+    "fields": {
+      "driver": null,
+      "brand": "Ram",
+      "model": "1500",
+      "color": "#00008B",
+      "license_plate": "AA0000JJ",
+      "year": 2022,
+      "vehicle_type": "truck",
+      "capacity": 5,
+      "registration_date": "2024-07-11",
+      "is_available": false,
+      "created_at": "2026-06-02T18:20:00Z",
+      "updated_at": "2026-06-02T18:20:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 11,
+    "fields": {
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "brand": "Skoda",
+      "model": "Octavia",
+      "color": "#FFFFFF",
+      "license_plate": "AB1234AA",
+      "year": 2021,
+      "vehicle_type": "sedan",
+      "capacity": 4,
+      "registration_date": "2024-02-10",
+      "is_available": true,
+      "created_at": "2026-06-03T08:00:00Z",
+      "updated_at": "2026-06-03T08:00:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 12,
+    "fields": {
+      "driver": "5d556555-4555-4555-9555-555555555555",
+      "brand": "Nissan",
+      "model": "Qashqai",
+      "color": "#FF0000",
+      "license_plate": "BB5678BB",
+      "year": 2020,
+      "vehicle_type": "suv",
+      "capacity": 4,
+      "registration_date": "2023-06-15",
+      "is_available": true,
+      "created_at": "2026-06-03T09:30:00Z",
+      "updated_at": "2026-06-03T09:30:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 13,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "brand": "Mazda",
+      "model": "3",
+      "color": "#FF0000",
+      "license_plate": "CC9012CC",
+      "year": 2022,
+      "vehicle_type": "hatchback",
+      "capacity": 4,
+      "registration_date": "2024-08-24",
+      "is_available": true,
+      "created_at": "2026-06-03T11:00:00Z",
+      "updated_at": "2026-06-03T11:00:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 14,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "brand": "Ford",
+      "model": "Transit",
+      "color": "#FFFFFF",
+      "license_plate": "DD3456DD",
+      "year": 2018,
+      "vehicle_type": "van",
+      "capacity": 9,
+      "registration_date": "2022-12-05",
+      "is_available": true,
+      "created_at": "2026-06-03T14:15:00Z",
+      "updated_at": "2026-06-03T14:15:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 15,
+    "fields": {
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "brand": "Toyota",
+      "model": "Hilux",
+      "color": "#008000",
+      "license_plate": "EE7890EE",
+      "year": 2021,
+      "vehicle_type": "truck",
+      "capacity": 4,
+      "registration_date": "2024-04-19",
+      "is_available": true,
+      "created_at": "2026-06-03T16:50:00Z",
+      "updated_at": "2026-06-03T16:50:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 16,
+    "fields": {
+      "driver": null,
+      "brand": "BMW",
+      "model": "530i",
+      "color": "#00008B",
+      "license_plate": "FF1234FF",
+      "year": 2021,
+      "vehicle_type": "sedan",
+      "capacity": 4,
+      "registration_date": "2024-09-01",
+      "is_available": true,
+      "created_at": "2026-06-04T09:00:00Z",
+      "updated_at": "2026-06-04T09:00:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 17,
+    "fields": {
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "brand": "Audi",
+      "model": "Q7",
+      "color": "#000000",
+      "license_plate": "GG5678GG",
+      "year": 2022,
+      "vehicle_type": "suv",
+      "capacity": 6,
+      "registration_date": "2024-11-15",
+      "is_available": true,
+      "created_at": "2026-06-04T11:20:00Z",
+      "updated_at": "2026-06-04T11:20:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 18,
+    "fields": {
+      "driver": "5d556555-4555-4555-9555-555555555555",
+      "brand": "Toyota",
+      "model": "Yaris",
+      "color": "#FFD700",
+      "license_plate": "HH9012HH",
+      "year": 2019,
+      "vehicle_type": "hatchback",
+      "capacity": 4,
+      "registration_date": "2023-02-28",
+      "is_available": true,
+      "created_at": "2026-06-04T13:40:00Z",
+      "updated_at": "2026-06-04T13:40:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 19,
+    "fields": {
+      "driver": null,
+      "brand": "Opel",
+      "model": "Vivaro",
+      "color": "#C0C0C0",
+      "license_plate": "II3456II",
+      "year": 2017,
+      "vehicle_type": "van",
+      "capacity": 8,
+      "registration_date": "2022-05-14",
+      "is_available": true,
+      "created_at": "2026-06-04T15:10:00Z",
+      "updated_at": "2026-06-04T15:10:00Z"
+    }
+  },
+  {
+    "model": "vehicles.vehicle",
+    "pk": 20,
+    "fields": {
+      "driver": null,
+      "brand": "Mitsubishi",
+      "model": "L200",
+      "color": "#FFFFFF",
+      "license_plate": "JJ7890JJ",
+      "year": 2020,
+      "vehicle_type": "truck",
+      "capacity": 5,
+      "registration_date": "2023-10-10",
+      "is_available": true,
+      "created_at": "2026-06-04T17:00:00Z",
+      "updated_at": "2026-06-04T17:00:00Z"
+    }
+  }
+]
