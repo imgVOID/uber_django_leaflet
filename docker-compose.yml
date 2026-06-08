@@ -35,5 +35,13 @@ services:
       db:
         condition: service_healthy
 
+  ts:
+    build: .
+    command: npm run watch
+    volumes:
+      - .:/code
+    depends_on:
+      - web
+
 volumes:
   postgres_data:
