@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'leaflet',
     'django_bootstrap5',
     'corsheaders',
+    'django_vite',
 
     # Local apps
     'accounts.apps.AccountsConfig',
@@ -217,8 +218,16 @@ if 'GDAL_LIBRARY_PATH' not in locals():
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / "assets"]
+
+DJANGO_VITE = {
+    "default": {
+        "dev_mode": True,
+        "manifest_path": BASE_DIR / "static" / "dist" / "manifest.json",
+    }
+}
+
+DJANGO_VITE_DEV_SERVER_HOST = 'localhost'
+DJANGO_VITE_DEV_SERVER_PORT = 5173

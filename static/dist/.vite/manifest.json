@@ -1,0 +1,14 @@
+{
+  "assets/taxi_map.ts": {
+    "file": "assets/taxi_map-DhJ1mbXV.js",
+    "name": "taxi_map",
+    "src": "assets/taxi_map.ts",
+    "isEntry": true
+  },
+  "assets/taxi_request.ts": {
+    "file": "assets/taxi_request-Bf-5uvfQ.js",
+    "name": "taxi_request",
+    "src": "assets/taxi_request.ts",
+    "isEntry": true
+  }
+}
