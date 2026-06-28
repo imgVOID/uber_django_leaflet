@@ -1,5 +1,7 @@
 import json
 import requests
+import logging
+import hashlib
 from collections import Counter
 from django.utils import timezone
 from django.shortcuts import redirect
@@ -23,6 +25,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.db.models import F
 from django.db.models import Avg
 from django.db.models import Count
+from collections import defaultdict
 from django.contrib.gis.geos import Point, Polygon, LineString
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -33,6 +36,8 @@ from vehicles.models import Vehicle
 
 from .services import DriverLocator
 from .forms import SpeedTestForm, RideRequestForm
+
+logger = logging.getLogger(__name__)
 
 # LIVE VIEW
 class LiveView(LoginRequiredMixin, TemplateView):
@@ -232,7 +237,6 @@ class TopRoutesAPI(APIView):
         data = request.data
         sw = data.get("southWest")
         ne = data.get("northEast")
-
         if not sw or not ne:
             return JsonResponse({"error": "Invalid data"}, status=400)
 
@@ -242,66 +246,101 @@ class TopRoutesAPI(APIView):
         except (ValueError, TypeError):
             return JsonResponse({"error": "Invalid coordinates"}, status=400)
 
-        point_counter = Counter()
-        
-        # Змінні для розрахунку середньої швидкості
-        total_speed_sum = 0.0
-        total_speed_count = 0
-        
+        GRID_PRECISION = 3
+        cell_groups = defaultdict(lambda: {
+            "points": [],
+            "shipment_ids": set(),
+            "speed_sum": 0.0,
+            "speed_count": 0,
+            "counted_shipments": set(),
+        })
+
         shipments = CargoShipment.objects.exclude(history__isnull=True).exclude(history={})
+        logger.warning(f"DEBUG: знайдено {shipments.count()} shipments з історією")
 
         for s in shipments:
+            logger.warning(f"DEBUG: shipment {s.id} speed_avg={s.speed_avg!r} (type={type(s.speed_avg)})")
+
             features = s.history.get("features", [])
+            if not features and "geometry" in s.history:
+                features = [s.history]
+
             for feature in features:
                 geometry = feature.get("geometry", {})
-                props = feature.get("properties", {})
-                
-                # Отримуємо координати
+                geo_type = geometry.get("type")
                 coords = geometry.get("coordinates", [])
-                # Якщо це LineString, coords — це список точок [[lng, lat], ...]
-                # Якщо це Point, coords — це [lng, lat]
-                points = [coords] if geometry.get("type") == "Point" else coords
-                
-                for pt in points:
-                    if isinstance(pt, (list, tuple)) and len(pt) >= 2:
-                        lng, lat = float(pt[0]), float(pt[1])
-                        
-                        if (min_lng <= lng <= max_lng) and (min_lat <= lat <= max_lat):
-                            point_counter[(round(lng, 3), round(lat, 3))] += 1
-                            
-                            # Збираємо швидкість, якщо вона є в properties
-                            speed = props.get("speed") 
-                            if speed is not None:
-                                total_speed_sum += float(speed)
-                                total_speed_count += 1
+                if not coords:
+                    continue
 
-        if not point_counter:
-            return JsonResponse({"message": "Даних немає", "street": "Невідома область"}, status=200)
+                flat_coords = []
+                if geo_type == "Point":
+                    flat_coords = [coords]
+                elif geo_type == "LineString":
+                    flat_coords = coords
+                elif geo_type == "MultiLineString":
+                    for line in coords:
+                        flat_coords.extend(line)
 
-        # 1. Точка
-        (lng, lat), count = point_counter.most_common(1)[0]
-        
-        # 2. Розрахунок швидкості
-        avg_speed = (total_speed_sum / total_speed_count) if total_speed_count > 0 else 0
+                matched_points = 0
+                for pt in flat_coords:
+                    lng, lat = float(pt[0]), float(pt[1])
+                    in_bbox = (min_lng <= lng <= max_lng) and (min_lat <= lat <= max_lat)
+                    if not in_bbox:
+                        continue
+                    matched_points += 1
 
-        # 3. Nominatim
+                    cell_key = (round(lng, GRID_PRECISION), round(lat, GRID_PRECISION))
+                    group = cell_groups[cell_key]
+                    group["points"].append((lng, lat))
+                    group["shipment_ids"].add(s.id)
+
+                    if s.id not in group["counted_shipments"]:
+                        group["counted_shipments"].add(s.id)
+                        if s.speed_avg and s.speed_avg > 0:
+                            group["speed_sum"] += s.speed_avg
+                            group["speed_count"] += 1
+                            logger.warning(f"DEBUG: ✅ shipment {s.id} додав speed_avg={s.speed_avg} в комірку {cell_key}")
+                        else:
+                            logger.warning(f"DEBUG: ❌ shipment {s.id} НЕ додав швидкість (speed_avg={s.speed_avg!r})")
+
+                logger.warning(f"DEBUG: shipment {s.id} мав {matched_points} точок у bbox")
+
+        if not cell_groups:
+            logger.warning("DEBUG: cell_groups порожній — жодна точка не потрапила в bbox")
+            return JsonResponse({"message": "Даних немає"}, status=200)
+
+        best_cell_key, best_group = max(
+            cell_groups.items(),
+            key=lambda kv: len(kv[1]["shipment_ids"])
+        )
+
+        logger.warning(f"DEBUG: best_cell={best_cell_key}, shipment_ids={best_group['shipment_ids']}, speed_sum={best_group['speed_sum']}, speed_count={best_group['speed_count']}")
+
+        avg_speed = (
+            best_group["speed_sum"] / best_group["speed_count"]
+            if best_group["speed_count"] > 0 else 0
+        )
+
+        path = best_group["points"]
+        lng, lat = best_cell_key
+
         street_name = "Невідома вулиця"
         try:
-            url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lng}&zoom=18&addressdetails=1"
-            headers = {'User-Agent': 'TaxiAnalyticsApp/1.0'}
-            response = requests.get(url, headers=headers, timeout=5)
-            if response.status_code == 200:
-                addr = response.json().get("address", {})
-                street_name = addr.get("road") or addr.get("path") or addr.get("name") or "Невідома вулиця"
-        except Exception as e:
-            print(f"Nominatim Error: {e}")
+            url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lng}&zoom=18"
+            res = requests.get(url, headers={'User-Agent': 'TaxiAnalyticsApp/1.0'}, timeout=3)
+            if res.status_code == 200:
+                addr = res.json().get("address", {})
+                street_name = addr.get("road") or addr.get("path") or "Невідома вулиця"
+        except Exception:
+            pass
 
         return JsonResponse({
+            'path': path,
             'lat': lat,
             'lng': lng,
-            'count': count,
+            'count': len(best_group["shipment_ids"]),
             'street': street_name,
-            'avg_speed_on_route': round(avg_speed, 1)  # Тепер це поле доступне на фронті
+            'avg_speed_on_route': round(avg_speed, 1)
         })
 
 
@@ -394,6 +433,57 @@ class RoutesInAreaAPI(APIView):
         if features and features[0].get("geometry", {}).get("type") == "Point":
             return True
         return False
+
+
+class CalculateIntersectionsAPI(APIView):
+    def post(self, request):
+        routes = request.data.get("routes", [])
+        
+        # 1. Перевірка кількості отриманих маршрутів
+        print(f"DEBUG: Отримано {len(routes)} маршрутів.")
+        
+        geo_routes = []
+        for index, item in enumerate(routes):
+            try:
+                features = item.get('features', [])
+                if not features:
+                    continue
+                
+                geometry = features[0].get('geometry', {})
+                coords = geometry.get('coordinates')
+                
+                if coords and len(coords) >= 2:
+                    geo_routes.append(LineString(coords))
+                else:
+                    print(f"DEBUG: Маршрут {index} не має валідних координат.")
+                    
+            except Exception as e:
+                print(f"DEBUG: Помилка парсингу маршруту {index}: {e}")
+        
+        print(f"DEBUG: Сформовано {len(geo_routes)} об'єктів LineString.")
+        
+        intersections = []
+        intersection_count = 0
+        
+        # 2. Дебаг циклу перетинів
+        for i in range(len(geo_routes)):
+            for j in range(i + 1, len(geo_routes)):
+                if geo_routes[i].intersects(geo_routes[j]):
+                    inter = geo_routes[i].intersection(geo_routes[j])
+                    
+                    if inter.geom_type == 'Point':
+                        intersections.append({'lat': inter.y, 'lng': inter.x})
+                        intersection_count += 1
+                    elif inter.geom_type == 'MultiPoint':
+                        for pt in inter:
+                            intersections.append({'lat': pt.y, 'lng': pt.x})
+                            intersection_count += 1
+                    else:
+                        print(f"DEBUG: Знайдено перетин типу {inter.geom_type} між {i} та {j}")
+        
+        print(f"DEBUG: Всього знайдено точок перетину: {intersection_count}")
+                            
+        return JsonResponse({"intersections": intersections})
 
 
 def get_vehicle_avg_speed(vehicle_id):

@@ -27,4 +27,5 @@ urlpatterns = [
     path('analytics/cargo-start/', get_cargo_start_points, name='analytics-cargo-start'),
     path('analytics/avg-speed/<int:vehicle_id>/', get_avg_speed_view, name='analytics-avg-speed'),
     path('analytics/routes-in-area/', RoutesInAreaAPI.as_view(), name='analytics-routes-in-area'),
+    path('analytics/calculate-intersections/', CalculateIntersectionsAPI.as_view(), name='calculate-intersections'),
 ]
