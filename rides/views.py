@@ -1,166 +1,38 @@
 import json
 import requests
 import logging
-import hashlib
-from collections import Counter
+from collections import defaultdict
 from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 from django.shortcuts import redirect
-from django.views.generic import TemplateView, FormView
+from django.db import transaction
+from django.db.models import Avg, Exists, OuterRef, Subquery
+from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.views.decorators.http import require_POST, require_GET
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.db.models import Avg, Exists, OuterRef, Subquery
-from django.db import transaction
-from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404
+from django.contrib.gis.geos import Point, Polygon, LineString
+from django.core.serializers.json import DjangoJSONEncoder
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-from django.contrib.gis.geos import Point, Polygon
-from django.db.models import Exists, OuterRef
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.dateparse import parse_datetime
-from rest_framework.permissions import IsAuthenticated
-from django.db.models import F
-from django.db.models import Avg
-from django.db.models import Count
-from collections import defaultdict
-from django.contrib.gis.geos import Point, Polygon, LineString
-import json
-from django.core.serializers.json import DjangoJSONEncoder
 
-from rides.models import Ride, RideRoute, DriverLocation, CargoShipment, VehicleTimeSnapshot
 from accounts.models import DriverProfile
 from vehicles.models import Vehicle
 
+from .models import Ride, RideRoute, DriverLocation, CargoShipment, VehicleTimeSnapshot
 from .services import DriverLocator
-from .forms import SpeedTestForm, RideRequestForm
+from .forms import RideRequestForm
+from .helpers import transform_points_to_linestring
 
 logger = logging.getLogger(__name__)
 
-# LIVE VIEW
-class LiveView(LoginRequiredMixin, TemplateView):
-    template_name = 'live_view/live_view.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
-class LiveFleetDataView(APIView):
-    permission_classes = [IsAuthenticated]
-    
-    def get(self, request):
-        qs = DriverLocation.objects.filter(
-            driver__is_active_driver=True,
-            driver__is_verified=True,
-        ).annotate(
-            is_cargo_active=Exists(
-                CargoShipment.objects.filter(vehicle=OuterRef('vehicle'), is_active=True) # Виправлено: vehicle замість pk
-            )
-        ).select_related('driver', 'vehicle')
-
-        data = []
-        for loc in qs:
-            # ЗАХИСТ ВІД ПУСТИХ ЗНАЧЕНЬ
-            if not loc.vehicle or not loc.driver:
-                continue
-                
-            data.append({
-                'id': loc.driver.user.pk,
-                'driver_name': loc.driver.name,
-                'lat': loc.position.y,
-                'lng': loc.position.x,
-                'brand': getattr(loc.vehicle, 'brand', 'N/A'),
-                'model': getattr(loc.vehicle, 'model', 'N/A'),
-                'vehicle_id': loc.vehicle.id,
-                'speed_last': getattr(loc.vehicle, 'speed_last', 0),
-                'is_busy': getattr(loc, 'is_busy', False),
-                'color': getattr(loc.vehicle, 'color', '#fd7e14').lower(),
-                'heading': getattr(loc, 'heading', 0),
-                'has_blown_tire': getattr(loc.vehicle, 'has_blown_tire', False),
-                'has_low_fuel': getattr(loc.vehicle, 'has_low_fuel', False),
-                'is_cargo_active': loc.is_cargo_active
-            })
-
-        return Response(data)
-
-@csrf_exempt
-def toggle_cargo(request, vehicle_id):
-    if request.method == 'POST':
-        # 1. Отримуємо профіль водія за поточним користувачем
-        vehicle = Vehicle.objects.select_related('driver').get(id=vehicle_id)
-        driver = vehicle.driver
-        print(driver)
-        
-        # 3. Логіка перемикання вантажу
-        active_cargo = CargoShipment.objects.filter(vehicle_id=vehicle.id, driver_id=vehicle.driver.id, is_active=True).first()
-        
-        if active_cargo:
-            active_cargo.is_active = False
-            active_cargo.finished_at = timezone.now()
-            active_cargo.save()
-            return JsonResponse({'status': 'cargo_dropped'})
-        else:
-            CargoShipment.objects.create(
-                vehicle=vehicle,
-                driver=vehicle.driver,
-                history={"type": "FeatureCollection", "features": []}
-            )
-            return JsonResponse({'status': 'cargo_picked'})
-            
-    return JsonResponse({'error': 'Invalid method'}, status=400)
-
-def get_history_at_time(request):
-    target_time_str = request.GET.get('time')
-    
-    if not target_time_str:
-        return JsonResponse({'error': 'Timestamp missing'}, status=400)
-
-    # Спробуємо замінити пробіли, якщо фронтенд їх передає некоректно
-    # (іноді браузери кодують '+' як ' ')
-    target_time_str = target_time_str.replace(' ', '+')
-    
-    target_time = parse_datetime(target_time_str)
-    
-    if not target_time:
-        return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
-    
-    if not target_time:
-        return JsonResponse({'error': 'Invalid timestamp'}, status=400)
-
-    # Використовуємо .filter().distinct('vehicle_id') для SQL-оптимізації
-    snapshots = VehicleTimeSnapshot.objects.filter(
-        timestamp__lte=target_time
-    ).order_by('vehicle_id', '-timestamp').distinct('vehicle_id')
-    
-    data = [{
-        "vehicle_id": s.vehicle_id,
-        "lat": s.lat,
-        "lng": s.lng,
-        "last_speed": s.speed,
-        "is_cargo_active": s.is_cargo_active,
-        "has_blown_tire": s.has_blown_tire,
-        "has_low_fuel": s.has_low_fuel
-    } for s in snapshots]
-    
-    return JsonResponse(data, safe=False)
-
-
-def get_available_timestamps(request):
-    # Отримуємо унікальні часові мітки, наприклад, останні 100 записів
-    timestamps = VehicleTimeSnapshot.objects.values_list('timestamp', flat=True) \
-        .distinct().order_by('-timestamp')[:100]
-    
-    # Конвертуємо в список та розвертаємо, щоб найдавніші були зліва (0), а найновіші справа (100)
-    data = sorted([t.isoformat() for t in timestamps])
-    return JsonResponse(data, safe=False)
-
-
-
-# ANALYTICS VIEWS
-
+# CLASS BASED VIEWS BASED
 class AnalyticsDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'analytics_view/analytics_view.html'
 
@@ -231,6 +103,171 @@ class AnalyticsFleetDataView(APIView):
             })
 
         return Response(data)
+
+
+class LiveView(LoginRequiredMixin, TemplateView):
+    template_name = 'live_view/live_view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class LiveFleetDataView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        qs = DriverLocation.objects.filter(
+            driver__is_active_driver=True,
+            driver__is_verified=True,
+        ).annotate(
+            is_cargo_active=Exists(
+                CargoShipment.objects.filter(vehicle=OuterRef('vehicle'), is_active=True) # Виправлено: vehicle замість pk
+            )
+        ).select_related('driver', 'vehicle')
+
+        data = []
+        for loc in qs:
+            # ЗАХИСТ ВІД ПУСТИХ ЗНАЧЕНЬ
+            if not loc.vehicle or not loc.driver:
+                continue
+                
+            data.append({
+                'id': loc.driver.user.pk,
+                'driver_name': loc.driver.name,
+                'lat': loc.position.y,
+                'lng': loc.position.x,
+                'brand': getattr(loc.vehicle, 'brand', 'N/A'),
+                'model': getattr(loc.vehicle, 'model', 'N/A'),
+                'vehicle_id': loc.vehicle.id,
+                'speed_last': getattr(loc.vehicle, 'speed_last', 0),
+                'is_busy': getattr(loc, 'is_busy', False),
+                'color': getattr(loc.vehicle, 'color', '#fd7e14').lower(),
+                'heading': getattr(loc, 'heading', 0),
+                'has_blown_tire': getattr(loc.vehicle, 'has_blown_tire', False),
+                'has_low_fuel': getattr(loc.vehicle, 'has_low_fuel', False),
+                'is_cargo_active': loc.is_cargo_active
+            })
+
+        return Response(data)
+
+
+#  CLASS BASED VIEWS ANALYTICS HELPERS
+class RoutesInAreaAPI(APIView):
+    def post(self, request):
+        data = request.data
+        sw = data.get("southWest")
+        ne = data.get("northEast")
+
+        if not sw or not ne:
+            return JsonResponse({"error": "Invalid data"}, status=400)
+
+        min_lng, max_lng = sorted([float(sw["lng"]), float(ne["lng"])])
+        min_lat, max_lat = sorted([float(sw["lat"]), float(ne["lat"])])
+        
+        shipments = CargoShipment.objects.filter(start_point__isnull=False).extra(
+            where=[
+                "ST_X(start_point) >= %s AND ST_X(start_point) <= %s",
+                "ST_Y(start_point) >= %s AND ST_Y(start_point) <= %s"
+            ],
+            params=[min_lng, max_lng, min_lat, max_lat]
+        )
+        
+        # Обробляємо кожну історію
+        processed_routes = []
+        for s in shipments:
+            if s.history:
+                # Перевіряємо, чи це колекція точок, і трансформуємо, якщо треба
+                if self._is_point_collection(s.history):
+                    processed_routes.append(transform_points_to_linestring(s.history))
+                else:
+                    processed_routes.append(s.history)
+        
+        return JsonResponse(processed_routes, safe=False)
+
+    def _is_point_collection(self, history):
+        """Допоміжний метод для перевірки типу геометрії"""
+        features = history.get("features", [])
+        if features and features[0].get("geometry", {}).get("type") == "Point":
+            return True
+        return False
+
+
+class CargoHotspotsAPI(APIView):
+    def post(self, request):
+        data = request.data
+        sw = data.get('southWest')
+        ne = data.get('northEast')
+        
+        if not sw or not ne:
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        # Створюємо багатокутник (bbox) з координат користувача
+        bbox = Polygon.from_bbox((sw['lng'], sw['lat'], ne['lng'], ne['lat']))
+        bbox.srid = 4326
+
+        # Фільтруємо завантаження, де start_point знаходиться всередині bbox
+        shipments = CargoShipment.objects.filter(start_point__contained=bbox)
+        
+        # Перетворюємо об'єкти в список координат
+        hotspots = [
+            {'lat': s.start_point.y, 'lng': s.start_point.x}
+            for s in shipments if s.start_point
+        ]
+        
+        return JsonResponse(hotspots, safe=False)
+
+
+class CalculateIntersectionsAPI(APIView):
+    def post(self, request):
+        routes = request.data.get("routes", [])
+        
+        # 1. Перевірка кількості отриманих маршрутів
+        print(f"DEBUG: Отримано {len(routes)} маршрутів.")
+        
+        geo_routes = []
+        for index, item in enumerate(routes):
+            try:
+                features = item.get('features', [])
+                if not features:
+                    continue
+                
+                geometry = features[0].get('geometry', {})
+                coords = geometry.get('coordinates')
+                
+                if coords and len(coords) >= 2:
+                    geo_routes.append(LineString(coords))
+                else:
+                    print(f"DEBUG: Маршрут {index} не має валідних координат.")
+                    
+            except Exception as e:
+                print(f"DEBUG: Помилка парсингу маршруту {index}: {e}")
+        
+        print(f"DEBUG: Сформовано {len(geo_routes)} об'єктів LineString.")
+        
+        intersections = []
+        intersection_count = 0
+        
+        # 2. Дебаг циклу перетинів
+        for i in range(len(geo_routes)):
+            for j in range(i + 1, len(geo_routes)):
+                if geo_routes[i].intersects(geo_routes[j]):
+                    inter = geo_routes[i].intersection(geo_routes[j])
+                    
+                    if inter.geom_type == 'Point':
+                        intersections.append({'lat': inter.y, 'lng': inter.x})
+                        intersection_count += 1
+                    elif inter.geom_type == 'MultiPoint':
+                        for pt in inter:
+                            intersections.append({'lat': pt.y, 'lng': pt.x})
+                            intersection_count += 1
+                    else:
+                        print(f"DEBUG: Знайдено перетин типу {inter.geom_type} між {i} та {j}")
+        
+        print(f"DEBUG: Всього знайдено точок перетину: {intersection_count}")
+                            
+        return JsonResponse({"intersections": intersections})
+
 
 class TopRoutesAPI(APIView):
     def post(self, request):
@@ -343,155 +380,7 @@ class TopRoutesAPI(APIView):
             'avg_speed_on_route': round(avg_speed, 1)
         })
 
-
-
-
-class CargoHotspotsAPI(APIView):
-    def post(self, request):
-        data = request.data
-        sw = data.get('southWest')
-        ne = data.get('northEast')
-        
-        if not sw or not ne:
-            return JsonResponse({'error': 'Invalid data'}, status=400)
-
-        # Створюємо багатокутник (bbox) з координат користувача
-        bbox = Polygon.from_bbox((sw['lng'], sw['lat'], ne['lng'], ne['lat']))
-        bbox.srid = 4326
-
-        # Фільтруємо завантаження, де start_point знаходиться всередині bbox
-        shipments = CargoShipment.objects.filter(start_point__contained=bbox)
-        
-        # Перетворюємо об'єкти в список координат
-        hotspots = [
-            {'lat': s.start_point.y, 'lng': s.start_point.x}
-            for s in shipments if s.start_point
-        ]
-        
-        return JsonResponse(hotspots, safe=False)
-
-
-def transform_points_to_linestring(feature_collection):
-    """
-    Перетворює FeatureCollection з Point у FeatureCollection з одним LineString
-    """
-    features = feature_collection.get("features", [])
-    if not features:
-        return feature_collection
-
-    # Витягуємо всі координати з точок
-    coordinates = [f["geometry"]["coordinates"] for f in features if f["geometry"]["type"] == "Point"]
-    
-    # Створюємо нову структуру
-    return {
-        "type": "FeatureCollection",
-        "features": [{
-            "type": "Feature",
-            "geometry": {
-                "type": "LineString",
-                "coordinates": coordinates
-            },
-            "properties": {"total_points": len(coordinates)}
-        }]
-    }
-
-class RoutesInAreaAPI(APIView):
-    def post(self, request):
-        data = request.data
-        sw = data.get("southWest")
-        ne = data.get("northEast")
-
-        if not sw or not ne:
-            return JsonResponse({"error": "Invalid data"}, status=400)
-
-        min_lng, max_lng = sorted([float(sw["lng"]), float(ne["lng"])])
-        min_lat, max_lat = sorted([float(sw["lat"]), float(ne["lat"])])
-        
-        shipments = CargoShipment.objects.filter(start_point__isnull=False).extra(
-            where=[
-                "ST_X(start_point) >= %s AND ST_X(start_point) <= %s",
-                "ST_Y(start_point) >= %s AND ST_Y(start_point) <= %s"
-            ],
-            params=[min_lng, max_lng, min_lat, max_lat]
-        )
-        
-        # Обробляємо кожну історію
-        processed_routes = []
-        for s in shipments:
-            if s.history:
-                # Перевіряємо, чи це колекція точок, і трансформуємо, якщо треба
-                if self._is_point_collection(s.history):
-                    processed_routes.append(transform_points_to_linestring(s.history))
-                else:
-                    processed_routes.append(s.history)
-        
-        return JsonResponse(processed_routes, safe=False)
-
-    def _is_point_collection(self, history):
-        """Допоміжний метод для перевірки типу геометрії"""
-        features = history.get("features", [])
-        if features and features[0].get("geometry", {}).get("type") == "Point":
-            return True
-        return False
-
-
-class CalculateIntersectionsAPI(APIView):
-    def post(self, request):
-        routes = request.data.get("routes", [])
-        
-        # 1. Перевірка кількості отриманих маршрутів
-        print(f"DEBUG: Отримано {len(routes)} маршрутів.")
-        
-        geo_routes = []
-        for index, item in enumerate(routes):
-            try:
-                features = item.get('features', [])
-                if not features:
-                    continue
-                
-                geometry = features[0].get('geometry', {})
-                coords = geometry.get('coordinates')
-                
-                if coords and len(coords) >= 2:
-                    geo_routes.append(LineString(coords))
-                else:
-                    print(f"DEBUG: Маршрут {index} не має валідних координат.")
-                    
-            except Exception as e:
-                print(f"DEBUG: Помилка парсингу маршруту {index}: {e}")
-        
-        print(f"DEBUG: Сформовано {len(geo_routes)} об'єктів LineString.")
-        
-        intersections = []
-        intersection_count = 0
-        
-        # 2. Дебаг циклу перетинів
-        for i in range(len(geo_routes)):
-            for j in range(i + 1, len(geo_routes)):
-                if geo_routes[i].intersects(geo_routes[j]):
-                    inter = geo_routes[i].intersection(geo_routes[j])
-                    
-                    if inter.geom_type == 'Point':
-                        intersections.append({'lat': inter.y, 'lng': inter.x})
-                        intersection_count += 1
-                    elif inter.geom_type == 'MultiPoint':
-                        for pt in inter:
-                            intersections.append({'lat': pt.y, 'lng': pt.x})
-                            intersection_count += 1
-                    else:
-                        print(f"DEBUG: Знайдено перетин типу {inter.geom_type} між {i} та {j}")
-        
-        print(f"DEBUG: Всього знайдено точок перетину: {intersection_count}")
-                            
-        return JsonResponse({"intersections": intersections})
-
-
-def get_vehicle_avg_speed(vehicle_id):
-    return CargoShipment.objects.filter(
-        vehicle_id=vehicle_id, 
-        is_active=False
-    ).aggregate(total_avg=Avg('speed_avg'))['total_avg']
-
+# FUNCTION BASED VIEWS ANALYTICS
 def get_avg_speed_view(request, vehicle_id):
     get_object_or_404(Vehicle, id=vehicle_id)
     avg_val = CargoShipment.objects.filter(
@@ -499,6 +388,7 @@ def get_avg_speed_view(request, vehicle_id):
         is_active=False
     ).aggregate(total_avg=Avg('speed_avg'))['total_avg']
     return JsonResponse({'avg_speed': float(avg_val)})
+
 
 def get_cargo_start_points(request):
     # Отримуємо межі з запиту
@@ -519,18 +409,81 @@ def get_cargo_start_points(request):
     return JsonResponse(list(points), safe=False)
 
 
-def get_hotspots_api(request):
-    # Беремо всі точки, де start_point задано
-    hotspots = CargoShipment.objects.filter(start_point__isnull=False).annotate(
-        lat=Y('start_point'),
-        lng=X('start_point')
-    ).values('lat', 'lng')
+# FUNCTION BASED VIEWS LIVE
+def get_history_at_time(request):
+    target_time_str = request.GET.get('time')
     
-    # Можна додати intensity, якщо групувати точки (наприклад, Count)
-    data = [{'lat': h['lat'], 'lng': h['lng'], 'intensity': 1} for h in hotspots]
+    if not target_time_str:
+        return JsonResponse({'error': 'Timestamp missing'}, status=400)
+
+    # Спробуємо замінити пробіли, якщо фронтенд їх передає некоректно
+    # (іноді браузери кодують '+' як ' ')
+    target_time_str = target_time_str.replace(' ', '+')
+    
+    target_time = parse_datetime(target_time_str)
+    
+    if not target_time:
+        return JsonResponse({'error': 'Invalid timestamp format'}, status=400)
+    
+    if not target_time:
+        return JsonResponse({'error': 'Invalid timestamp'}, status=400)
+
+    # Використовуємо .filter().distinct('vehicle_id') для SQL-оптимізації
+    snapshots = VehicleTimeSnapshot.objects.filter(
+        timestamp__lte=target_time
+    ).order_by('vehicle_id', '-timestamp').distinct('vehicle_id')
+    
+    data = [{
+        "vehicle_id": s.vehicle_id,
+        "lat": s.lat,
+        "lng": s.lng,
+        "last_speed": s.speed,
+        "is_cargo_active": s.is_cargo_active,
+        "has_blown_tire": s.has_blown_tire,
+        "has_low_fuel": s.has_low_fuel
+    } for s in snapshots]
+    
     return JsonResponse(data, safe=False)
 
-# ROUTES RIDES
+
+@csrf_exempt
+def toggle_cargo(request, vehicle_id):
+    if request.method == 'POST':
+        # 1. Отримуємо профіль водія за поточним користувачем
+        vehicle = Vehicle.objects.select_related('driver').get(id=vehicle_id)
+        driver = vehicle.driver
+        print(driver)
+        
+        # 3. Логіка перемикання вантажу
+        active_cargo = CargoShipment.objects.filter(vehicle_id=vehicle.id, driver_id=vehicle.driver.id, is_active=True).first()
+        
+        if active_cargo:
+            active_cargo.is_active = False
+            active_cargo.finished_at = timezone.now()
+            active_cargo.save()
+            return JsonResponse({'status': 'cargo_dropped'})
+        else:
+            CargoShipment.objects.create(
+                vehicle=vehicle,
+                driver=vehicle.driver,
+                history={"type": "FeatureCollection", "features": []}
+            )
+            return JsonResponse({'status': 'cargo_picked'})
+            
+    return JsonResponse({'error': 'Invalid method'}, status=400)
+
+
+def get_available_timestamps(request):
+    # Отримуємо унікальні часові мітки, наприклад, останні 100 записів
+    timestamps = VehicleTimeSnapshot.objects.values_list('timestamp', flat=True) \
+        .distinct().order_by('-timestamp')[:100]
+    
+    # Конвертуємо в список та розвертаємо, щоб найдавніші були зліва (0), а найновіші справа (100)
+    data = sorted([t.isoformat() for t in timestamps])
+    return JsonResponse(data, safe=False)
+
+
+# ROUTES RIDES VIEWS
 
 class TaxiRequestView(LoginRequiredMixin, TemplateView):
 	template_name = 'taxi_request.html'
@@ -574,18 +527,6 @@ class TaxiMapView(LoginRequiredMixin, TemplateView):
             }
         return context
 
-
-class SpeedSocketTestView(LoginRequiredMixin, FormView):
-    template_name = 'speed_test.html'
-    form_class = SpeedTestForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ride'] = get_object_or_404(Ride, id=self.kwargs.get('ride_id'))
-        return context
-
-    def form_valid(self, form):
-        return super().form_valid(form)
 
 @require_GET
 @login_required

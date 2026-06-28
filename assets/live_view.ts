@@ -1,130 +1,14 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { LiveUpdateMessage, ToggleCargoResponse, Vehicle } from './types/live';
+import { CONFIG, SELECTORS } from './utils/live_constants';
+import { InfoPanel } from './utils/live_info_panel';
+import { createCarIcon, getCsrfToken } from './utils/live_helpers';
+import { LiveSocket } from './utils/live_socket';
 
 // ==================== Types ====================
 declare global {
   interface Window { liveMapInstance: LiveViewMap; }
-}
-
-interface Vehicle {
-  id: number;
-  vehicle_id: number;
-  driver_name: string;
-  lat: number;
-  lng: number;
-  brand: string;
-  model: string;
-  speed_last: number;
-  has_blown_tire: boolean;
-  has_low_fuel: boolean;
-  color: string;
-  heading: number;
-  is_cargo_active: boolean;
-}
-
-interface LiveUpdateMessage {
-  type: 'driver.location.update';
-  driver_id: string;
-  vehicle_id: number;
-  lat: number;
-  lng: number;
-  last_speed: number;
-  is_cargo_active: boolean;
-}
-
-interface ToggleCargoResponse {
-  status: 'cargo_picked' | 'cargo_dropped';
-}
-
-// ==================== Constants ====================
-const CONFIG = {
-  mapCenter: [50.4501, 30.5234] as [number, number],
-  mapZoom: 13,
-  tileUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-  fleetEndpoint: '/taxi/live-fleet/',
-  toggleCargoEndpoint: (vehicleId: number) => `/taxi/live/toggle-cargo/${vehicleId}/`,
-  wsPath: '/ws/live-view/',
-  speedHighlightMs: 500,
-};
-
-const SELECTORS = {
-  infoPanels: 'info-panels',
-  timeSlider: 'time-slider',
-};
-
-// ==================== Helpers ====================
-function getCsrfToken(): string {
-  return document.cookie.match(/csrftoken=([^;]+)/)?.[1] ?? '';
-}
-
-function createCarIcon(color: string, heading: number = 0): L.DivIcon {
-  return L.divIcon({
-    className: 'car-icon-marker',
-    html: `<div style="font-size: 28px; color: ${color}; transform: rotate(${heading}deg);"><i class="bi-cursor-fill"></i></div>`,
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-  });
-}
-
-function cardId(vehicleId: number): string {
-  return `card-vehicle-${vehicleId}`;
-}
-
-function cargoButtonId(vehicleId: number): string {
-  return `btn-cargo-${vehicleId}`;
-}
-
-function cargoButtonHtml(vehicleId: number, isActive: boolean): string {
-  return `
-    <i class="bi ${isActive ? 'bi-box-arrow-up' : 'bi-box-seam'}"></i>
-    <span class="btn-text">${isActive ? 'Скинути вантаж' : 'Взяти вантаж'}</span>
-  `;
-}
-
-function cardTemplate(v: Vehicle): string {
-  const hasIssue = v.has_blown_tire || v.has_low_fuel;
-  
-  // Допоміжна функція для відображення іконки статусу
-  const getStatusIcon = (condition: boolean, iconTrue: string, iconFalse: string) => `
-    <i class="bi ${condition ? iconTrue : iconFalse}" 
-       style="color: ${condition ? '#dc3545' : '#198754'}; font-size: 1.1rem; vertical-align: middle;">
-    </i>`;
-
-  return `
-    <div class="vehicle-info-card border-start border-4 ${hasIssue ? 'border-danger' : 'border-success'} shadow-sm p-3 bg-white"
-         id="${cardId(v.vehicle_id)}" data-driver-id="${v.id}">
-
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <h6 class="mb-0 text-truncate" style="max-width: 150px;">${v.brand} ${v.model}</h6>
-        <button class="btn-close btn-sm" onclick="document.getElementById('${cardId(v.vehicle_id)}').remove()"></button>
-      </div>
-
-      <ul class="list-unstyled small mb-0">
-        <li><i class="bi bi-person"></i> ${v.driver_name}</li>
-        <li><i class="bi bi-speedometer2"></i> <span class="speed-val">${v.speed_last}</span> км/год</li>
-        
-        <li class="status-row mt-2 d-flex gap-3">
-            <span title="Стан шин">
-                ${getStatusIcon(v.has_blown_tire, 'bi-exclamation-triangle-fill', 'bi-check-circle-fill')}
-                <span class="${v.has_blown_tire ? 'text-danger' : 'text-success'}">Шини</span>
-            </span>
-            <span title="Рівень палива">
-                ${getStatusIcon(v.has_low_fuel, 'bi-fuel-pump-fill', 'bi-fuel-pump-fill')}
-                <span class="${v.has_low_fuel ? 'text-danger' : 'text-success'}">Паливо</span>
-            </span>
-        </li>
-
-        <li class="mt-3">
-          <button class="btn btn-sm ${v.is_cargo_active ? 'btn-danger' : 'btn-primary'} w-100 "
-                  ${liveMapInstance.isRewinding ? 'disabled' : ''}
-                  id="${cargoButtonId(v.vehicle_id)}"
-                  onclick="liveMapInstance.toggleCargo(${v.vehicle_id})">
-            ${cargoButtonHtml(v.vehicle_id, v.is_cargo_active)}
-          </button>
-        </li>
-      </ul>
-    </div>
-  `;
 }
 
 // ==================== FleetApi ====================
@@ -154,7 +38,7 @@ class FleetApi {
 // ==================== MarkerManager ====================
 class MarkerManager {
   private markers = new Map<number, L.Marker>();
-  private polylines = new Map<number, L.Polyline>(); // <--- ДОДАТИ ЦЕ
+  private polylines = new Map<number, L.Polyline>();
 
   constructor(private map: L.Map, private onMarkerClick: (v: Vehicle) => void) {}
 
@@ -224,68 +108,6 @@ class MarkerManager {
   has(vehicleId: number): boolean { return this.markers.has(vehicleId); }
 }
 
-// ==================== InfoPanel ====================
-class InfoPanel {
-  private selected = new Set<number>();
-
-  constructor(private container: HTMLElement) {}
-
-  toggle(v: Vehicle): void {
-    if (this.selected.has(v.vehicle_id)) {
-      this.selected.delete(v.vehicle_id);
-      document.getElementById(cardId(v.vehicle_id))?.remove();
-    } else {
-      this.selected.add(v.vehicle_id);
-      this.container.insertAdjacentHTML('beforeend', cardTemplate(v));
-    }
-  }
-
-  isSelected(vehicleId: number): boolean {
-    return this.selected.has(vehicleId);
-  }
-
-  updateSpeed(vehicleId: number, speed: number): void {
-    const card = document.getElementById(cardId(vehicleId));
-    if (!card) {
-      console.warn(`Картку для авто ${vehicleId} не знайдено в DOM`);
-      return;
-    }
-
-    const speedEl = card.querySelector('.speed-val');
-    if (!speedEl) return;
-
-    speedEl.textContent = speed.toString();
-    speedEl.classList.add('text-primary');
-    setTimeout(() => speedEl.classList.remove('text-primary'), CONFIG.speedHighlightMs);
-  }
-
-  updateCargoButton(vehicleId: number, isActive: boolean): void {
-    const btn = document.getElementById(cargoButtonId(vehicleId));
-    if (!btn) return;
-
-    btn.className = `btn btn-sm ${isActive ? 'btn-danger' : 'btn-primary'} w-100`;
-    btn.innerHTML = cargoButtonHtml(vehicleId, isActive);
-  }
-}
-
-// ==================== LiveSocket ====================
-class LiveSocket {
-  private socket: WebSocket;
-
-  constructor(private onUpdate: (data: LiveUpdateMessage) => void) {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    this.socket = new WebSocket(`${protocol}://${window.location.host}${CONFIG.wsPath}`);
-    this.socket.onmessage = (event) => this.handleMessage(event);
-  }
-
-  private handleMessage(event: MessageEvent): void {
-    const data = JSON.parse(event.data);
-    if (data.type === 'driver.location.update') {
-      this.onUpdate(data as LiveUpdateMessage);
-    }
-  }
-}
-
 // ==================== LiveViewMap ====================
 class LiveViewMap {
   private map: L.Map;
@@ -299,8 +121,8 @@ class LiveViewMap {
         this.map = L.map('map', { closePopupOnClick: false }).setView(CONFIG.mapCenter, CONFIG.mapZoom);
         L.tileLayer(CONFIG.tileUrl).addTo(this.map);
 
-        this.markerManager = new MarkerManager(this.map, (v) => this.infoPanel.toggle(v));
         this.infoPanel = new InfoPanel(document.getElementById(SELECTORS.infoPanels)!);
+        this.markerManager = new MarkerManager(this.map, (v) => this.infoPanel.toggle(v));
         this.socket = new LiveSocket((data) => this.handleLiveUpdate(data));
 
         this.loadInitialVehicles();
@@ -309,7 +131,7 @@ class LiveViewMap {
         this.setupHistoryControls();
     }
     private async fetchTimestamps() {
-        const res = await fetch('/taxi/live/timestamps/');
+        const res = await fetch('/live/timestamps/');
         this.timestamps = await res.json();
         const slider = document.getElementById(SELECTORS.timeSlider) as HTMLInputElement;
         if (slider) {
@@ -348,7 +170,7 @@ class LiveViewMap {
         this.isRewinding = true;
         
         // Кодуємо параметр часу для правильної передачі символу '+'
-        const response = await fetch(`/taxi/live/get-time-rec/?time=${encodeURIComponent(timestamp)}`);
+        const response = await fetch(`/live/get-time-rec/?time=${encodeURIComponent(timestamp)}`);
         if (!response.ok) return;
 
         const historicalData: any[] = await response.json();

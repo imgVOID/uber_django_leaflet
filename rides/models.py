@@ -4,6 +4,55 @@ from django.core.exceptions import ValidationError
 from accounts.models import DriverProfile, ClientProfile
 from vehicles.models import Vehicle
 
+########### UNIVERSAL MODELS ###########
+
+class DriverLocation(models.Model):
+    """
+    Model to track driver and vehicle position in real-time.
+    Stores geographic location in GeoJSON format.
+    """
+    driver = models.ForeignKey(
+        DriverProfile,
+        on_delete=models.CASCADE,
+        related_name='locations',
+        help_text="Driver associated with this location"
+    )
+    vehicle = models.ForeignKey(
+        Vehicle,
+        on_delete=models.CASCADE,
+        related_name='locations',
+        help_text="Vehicle associated with this location"
+    )
+    position = gis_models.PointField(srid=4326, help_text="Geographic position (latitude, longitude) in WGS84 format")
+    heading = models.FloatField(null=True, blank=True, help_text="Direction in degrees (0-360)")
+    speed = models.FloatField(null=True, blank=True, help_text="Current speed in km/h")
+    altitude = models.FloatField(null=True, blank=True, help_text="Altitude in meters")
+    accuracy = models.FloatField(null=True, blank=True, help_text="GPS accuracy in meters")
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Driver Location"
+        verbose_name_plural = "Driver Locations"
+        ordering = ['-updated_at']
+        indexes = [
+            models.Index(fields=['driver', '-updated_at']),
+            models.Index(fields=['vehicle', '-updated_at']),
+        ]
+
+    def __str__(self):
+        return f"{self.driver.name} - {self.vehicle} at {self.updated_at}"
+
+    def clean(self):
+        if self.vehicle and self.vehicle.driver != self.driver:
+            raise ValidationError("The selected vehicle does not belong to this driver.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+########### UNIVERSAL MODELS ###########
+########### HISTORY MODELS ###########
 
 class CargoShipment(models.Model):
     driver = models.ForeignKey(DriverProfile, on_delete=models.SET_NULL, null=True, blank=True)
@@ -71,52 +120,8 @@ class VehicleTimeSnapshot(models.Model):
     def __str__(self):
         return f"{self.vehicle.model} @ {self.timestamp}"
 
-
-class DriverLocation(models.Model):
-    """
-    Model to track driver and vehicle position in real-time.
-    Stores geographic location in GeoJSON format.
-    """
-    driver = models.ForeignKey(
-        DriverProfile,
-        on_delete=models.CASCADE,
-        related_name='locations',
-        help_text="Driver associated with this location"
-    )
-    vehicle = models.ForeignKey(
-        Vehicle,
-        on_delete=models.CASCADE,
-        related_name='locations',
-        help_text="Vehicle associated with this location"
-    )
-    position = gis_models.PointField(srid=4326, help_text="Geographic position (latitude, longitude) in WGS84 format")
-    heading = models.FloatField(null=True, blank=True, help_text="Direction in degrees (0-360)")
-    speed = models.FloatField(null=True, blank=True, help_text="Current speed in km/h")
-    altitude = models.FloatField(null=True, blank=True, help_text="Altitude in meters")
-    accuracy = models.FloatField(null=True, blank=True, help_text="GPS accuracy in meters")
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = "Driver Location"
-        verbose_name_plural = "Driver Locations"
-        ordering = ['-updated_at']
-        indexes = [
-            models.Index(fields=['driver', '-updated_at']),
-            models.Index(fields=['vehicle', '-updated_at']),
-        ]
-
-    def __str__(self):
-        return f"{self.driver.name} - {self.vehicle} at {self.updated_at}"
-
-    def clean(self):
-        if self.vehicle and self.vehicle.driver != self.driver:
-            raise ValidationError("The selected vehicle does not belong to this driver.")
-
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
-
+########### HISTORY MODELS ###########
+########### TAXI RIDE MODELS ###########
 
 class Ride(models.Model):
     """
@@ -202,7 +207,6 @@ class Ride(models.Model):
         super().save(*args, **kwargs)
 
 
-# Creating when the driver arrived
 class RideRoute(models.Model):
     ride = models.OneToOneField(Ride, on_delete=models.CASCADE, primary_key=True)
     history = models.JSONField(
@@ -228,3 +232,5 @@ class RideRoute(models.Model):
     @property
     def is_finished(self):
         return self.ride.is_finished
+
+########### TAXI RIDE MODELS ###########

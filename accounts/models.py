@@ -166,6 +166,10 @@ class DriverProfile(AbstractProfile):
         # Check if driver has active ride
         active_rides = self.assigned_rides.filter(status__in=['accepted', 'arrived', 'in_progress']).exists()
         return not active_rides
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
     
     def get_available_vehicle(self):
         """Get first available vehicle for this driver."""

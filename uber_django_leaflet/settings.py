@@ -143,7 +143,7 @@ CHANNEL_LAYERS = {
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_REDIRECT_URL = '/taxi/'
+LOGIN_REDIRECT_URL = '/'
 
 
 # Password validation

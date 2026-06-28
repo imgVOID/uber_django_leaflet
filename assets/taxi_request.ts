@@ -12,7 +12,7 @@ const API = {
     },
     async startRide(payload: TaxiRequestPayload): Promise<{ ride_id: number } | null> {
         const token = (document.querySelector('[name=csrfmiddlewaretoken]') as HTMLInputElement)?.value;
-        const res = await fetch('/taxi/ride/start/', {
+        const res = await fetch('//start/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-CSRFToken': token || '' },
             body: JSON.stringify(payload),
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const result = await API.startRide(payload);
         if (result?.ride_id) {
-            window.location.href = '/taxi/map/';
+            window.location.href = '/map/';
         } else {
             status.textContent = 'Error: Could not create ride.';
         }

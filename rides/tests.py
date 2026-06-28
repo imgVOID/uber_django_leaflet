@@ -45,19 +45,19 @@ class TaxiViewsTestCase(TestCase):
 
 	def test_taxi_request_requires_login_and_renders(self):
 		# unauthenticated -> redirect to login
-		r = self.client.get('/taxi/')
+		r = self.client.get('/')
 		self.assertEqual(r.status_code, 302)
 
 		# authenticated -> 200 and template
 		self.client.force_login(self.client_user)
-		r = self.client.get('/taxi/')
+		r = self.client.get('/')
 		self.assertEqual(r.status_code, 200)
 		self.assertTemplateUsed(r, 'taxi_request.html')
 
 	def test_set_location_and_session_storage(self):
 		self.client.force_login(self.client_user)
 		payload = {'lat': 55.751244, 'lng': 37.618423}
-		r = self.client.post('/taxi/set_location/', data=json.dumps(payload), content_type='application/json')
+		r = self.client.post('/set_location/', data=json.dumps(payload), content_type='application/json')
 		self.assertEqual(r.status_code, 200)
 		sess = self.client.session
 		self.assertIn('user_location', sess)
@@ -65,12 +65,12 @@ class TaxiViewsTestCase(TestCase):
 
 	def test_set_location_invalid_payload(self):
 		self.client.force_login(self.client_user)
-		r = self.client.post('/taxi/set_location/', data='notjson', content_type='application/json')
+		r = self.client.post('/set_location/', data='notjson', content_type='application/json')
 		self.assertEqual(r.status_code, 400)
 
 	def test_nearby_drivers_returns_driver(self):
 		self.client.force_login(self.client_user)
-		r = self.client.get('/taxi/nearby_drivers/?lat=55.751244&lng=37.618423')
+		r = self.client.get('/nearby_drivers/?lat=55.751244&lng=37.618423')
 		self.assertEqual(r.status_code, 200)
 		data = r.json()
 		self.assertIn('drivers', data)
@@ -79,10 +79,10 @@ class TaxiViewsTestCase(TestCase):
 		self.assertIn('driver_name', d)
 
 	def test_taxi_map_requires_login_and_renders(self):
-		r = self.client.get('/taxi/map/')
+		r = self.client.get('/map/')
 		self.assertEqual(r.status_code, 302)
 		self.client.force_login(self.client_user)
-		r = self.client.get('/taxi/map/')
+		r = self.client.get('/map/')
 		self.assertEqual(r.status_code, 200)
 		self.assertTemplateUsed(r, 'taxi_map.html')
 
