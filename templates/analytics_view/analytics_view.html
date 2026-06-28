@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load django_vite %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Копія стилів з base.html та live_view.html для коректної роботи карти */
+    html, body, #map { height: 100%; margin: 0; padding: 0; }
+    .map-wrap { height: 100vh; }
+    .info-panels-container { position: absolute; top: 20px; left: 20px; z-index: 1000; }
+    .vehicle-info-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); width: 250px; }
+    .car-icon-marker i {
+        text-shadow: 
+            -1px -1px 0 #000, 
+            1px -1px 0 #000, 
+            -1px  1px 0 #000, 
+            1px  1px 0 #000;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div id="map" class="map-wrap"></div>
+    <div id="info-panels" class="info-panels-container"></div>
+    <div class="control-panel" style="position: absolute; bottom: 20px; left: 20px; z-index: 1000;">
+        <button id="btn-select-area" class="btn btn-primary shadow">Select</button>
+        <button id="btn-clear-selection" class="btn btn-danger shadow">X</button>
+        <button id="btn-show-routes" class="btn btn-success shadow" style="display: none;">Популярні дороги</button>
+        <button id="btn-show-heat" class="btn btn-success shadow" style="display: none;">Теплова мапа карго</button>
+        <button id="btn-show-all-routes" class="btn btn-success shadow" style="display: none;">Маршрути старт в області</button>
+    </div>
+    
+    
+    {% vite_asset 'assets/analytics.ts' %}
+{% endblock %}

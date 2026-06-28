@@ -164,7 +164,7 @@ class DriverProfile(AbstractProfile):
         if not self.vehicles.filter(is_available=True).exists():
             return False
         # Check if driver has active ride
-        active_rides = self.assigned_rides.filter(status__in=['accepted', 'in_progress']).exists()
+        active_rides = self.assigned_rides.filter(status__in=['accepted', 'arrived', 'in_progress']).exists()
         return not active_rides
     
     def get_available_vehicle(self):

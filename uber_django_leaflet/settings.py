@@ -60,6 +60,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     'django.contrib.gis',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,7 +82,6 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'vehicles',
     'rides',
-    'routes',
 ]
 
 MIDDLEWARE = [
@@ -92,7 +92,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'uber_django_leaflet.urls'
@@ -112,8 +112,9 @@ TEMPLATES = [
     },
 ]
 
+# ASGI WSGI
 WSGI_APPLICATION = 'uber_django_leaflet.wsgi.application'
-
+ASGI_APPLICATION = 'uber_django_leaflet.asgi.application'
 
 # Database configuration modified for hybrid local/docker development
 # Inside Docker container, POSTGRES_HOST env var is 'db'.
@@ -130,6 +131,13 @@ DATABASES = {
         'HOST': DB_HOST,
         'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
+}
+
+# Django Channels configuration TESTING PURPOSES
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
 }
 
 # Custom User Model
@@ -180,6 +188,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
 }
 
 OAUTH2_PROVIDER = {

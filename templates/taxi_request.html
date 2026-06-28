@@ -15,8 +15,7 @@
       .center { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
       .card { width: 640px; padding: 28px; }
       .form-label { font-weight: 600; }
-      /* Style for address autocomplete search results */
-      .search-results { max-height: 150px; overflow-y: auto; z-index: 1000; position: absolute; width: 100%; shadow: 0 4px 6px rgba(0,0,0,0.1); }
+      .search-results { max-height: 150px; overflow-y: auto; z-index: 1000; position: absolute; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
       .search-results .list-group-item { cursor: pointer; }
       .search-results .list-group-item:hover { background-color: #f1f3f5; }
       .position-relative-container { position: relative; }
@@ -31,7 +30,6 @@
         <form id="taxiForm">
           {% csrf_token %}
           <div class="row g-3">
-            
             <div class="col-12 position-relative-container">
               <label for="from_addr" class="form-label">From</label>
               <div class="input-group">
@@ -64,8 +62,6 @@
         </div>
       </div>
     </div>
-
-    {% bootstrap_javascript %}
-    <script src="{% static 'js/taxi_request.js' %}"></script>
   </body>
+    {% bootstrap_javascript %}
 </html>

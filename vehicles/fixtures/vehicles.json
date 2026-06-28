@@ -14,7 +14,13 @@
       "registration_date": "2024-01-15",
       "is_available": true,
       "created_at": "2026-06-01T10:00:00Z",
-      "updated_at": "2026-06-01T10:00:00Z"
+      "updated_at": "2026-06-01T10:00:00Z",
+      "speed_max": 209.0,
+      "speed_last": 170.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -32,7 +38,13 @@
       "registration_date": "2024-03-20",
       "is_available": true,
       "created_at": "2026-06-01T11:15:00Z",
-      "updated_at": "2026-06-01T11:15:00Z"
+      "updated_at": "2026-06-01T11:15:00Z",
+      "speed_max": 183.0,
+      "speed_last": 59.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -50,7 +62,13 @@
       "registration_date": "2023-08-12",
       "is_available": true,
       "created_at": "2026-06-01T12:30:00Z",
-      "updated_at": "2026-06-01T12:30:00Z"
+      "updated_at": "2026-06-01T12:30:00Z",
+      "speed_max": 163.0,
+      "speed_last": 67.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -66,9 +84,15 @@
       "vehicle_type": "van",
       "capacity": 8,
       "registration_date": "2024-05-10",
-      "is_available": true,
+      "is_available": false,
       "created_at": "2026-06-01T14:00:00Z",
-      "updated_at": "2026-06-01T14:00:00Z"
+      "updated_at": "2026-06-01T14:00:00Z",
+      "speed_max": 141.0,
+      "speed_last": 87.0,
+      "is_emergency": true,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "has_been_lost": false
     }
   },
   {
@@ -86,7 +110,13 @@
       "registration_date": "2024-02-18",
       "is_available": false,
       "created_at": "2026-06-01T15:22:00Z",
-      "updated_at": "2026-06-01T15:22:00Z"
+      "updated_at": "2026-06-01T15:22:00Z",
+      "speed_max": 134.0,
+      "speed_last": 45.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -104,7 +134,13 @@
       "registration_date": "2023-11-05",
       "is_available": true,
       "created_at": "2026-06-02T09:10:00Z",
-      "updated_at": "2026-06-02T09:10:00Z"
+      "updated_at": "2026-06-02T09:10:00Z",
+      "speed_max": 192.0,
+      "speed_last": 102.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -122,7 +158,13 @@
       "registration_date": "2025-01-22",
       "is_available": true,
       "created_at": "2026-06-02T10:45:00Z",
-      "updated_at": "2026-06-02T10:45:00Z"
+      "updated_at": "2026-06-02T10:45:00Z",
+      "speed_max": 157.0,
+      "speed_last": 77.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -140,7 +182,13 @@
       "registration_date": "2023-04-14",
       "is_available": true,
       "created_at": "2026-06-02T13:15:00Z",
-      "updated_at": "2026-06-02T13:15:00Z"
+      "updated_at": "2026-06-02T13:15:00Z",
+      "speed_max": 144.0,
+      "speed_last": 79.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -158,7 +206,13 @@
       "registration_date": "2023-09-30",
       "is_available": true,
       "created_at": "2026-06-02T16:40:00Z",
-      "updated_at": "2026-06-02T16:40:00Z"
+      "updated_at": "2026-06-02T16:40:00Z",
+      "speed_max": 151.0,
+      "speed_last": 61.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -176,7 +230,13 @@
       "registration_date": "2024-07-11",
       "is_available": false,
       "created_at": "2026-06-02T18:20:00Z",
-      "updated_at": "2026-06-02T18:20:00Z"
+      "updated_at": "2026-06-02T18:20:00Z",
+      "speed_max": 126.0,
+      "speed_last": 91.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -194,7 +254,13 @@
       "registration_date": "2024-02-10",
       "is_available": true,
       "created_at": "2026-06-03T08:00:00Z",
-      "updated_at": "2026-06-03T08:00:00Z"
+      "updated_at": "2026-06-03T08:00:00Z",
+      "speed_max": 175.0,
+      "speed_last": 155.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -212,7 +278,13 @@
       "registration_date": "2023-06-15",
       "is_available": true,
       "created_at": "2026-06-03T09:30:00Z",
-      "updated_at": "2026-06-03T09:30:00Z"
+      "updated_at": "2026-06-03T09:30:00Z",
+      "speed_max": 188.0,
+      "speed_last": 187.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -230,7 +302,13 @@
       "registration_date": "2024-08-24",
       "is_available": true,
       "created_at": "2026-06-03T11:00:00Z",
-      "updated_at": "2026-06-03T11:00:00Z"
+      "updated_at": "2026-06-03T11:00:00Z",
+      "speed_max": 153.0,
+      "speed_last": 52.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -248,7 +326,13 @@
       "registration_date": "2022-12-05",
       "is_available": true,
       "created_at": "2026-06-03T14:15:00Z",
-      "updated_at": "2026-06-03T14:15:00Z"
+      "updated_at": "2026-06-03T14:15:00Z",
+      "speed_max": 156.0,
+      "speed_last": 86.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -266,7 +350,13 @@
       "registration_date": "2024-04-19",
       "is_available": true,
       "created_at": "2026-06-03T16:50:00Z",
-      "updated_at": "2026-06-03T16:50:00Z"
+      "updated_at": "2026-06-03T16:50:00Z",
+      "speed_max": 142.0,
+      "speed_last": 127.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -284,7 +374,13 @@
       "registration_date": "2024-09-01",
       "is_available": true,
       "created_at": "2026-06-04T09:00:00Z",
-      "updated_at": "2026-06-04T09:00:00Z"
+      "updated_at": "2026-06-04T09:00:00Z",
+      "speed_max": 180.0,
+      "speed_last": 97.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -302,7 +398,13 @@
       "registration_date": "2024-11-15",
       "is_available": true,
       "created_at": "2026-06-04T11:20:00Z",
-      "updated_at": "2026-06-04T11:20:00Z"
+      "updated_at": "2026-06-04T11:20:00Z",
+      "speed_max": 172.0,
+      "speed_last": 89.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -320,7 +422,13 @@
       "registration_date": "2023-02-28",
       "is_available": true,
       "created_at": "2026-06-04T13:40:00Z",
-      "updated_at": "2026-06-04T13:40:00Z"
+      "updated_at": "2026-06-04T13:40:00Z",
+      "speed_max": 159.0,
+      "speed_last": 129.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -338,7 +446,13 @@
       "registration_date": "2022-05-14",
       "is_available": true,
       "created_at": "2026-06-04T15:10:00Z",
-      "updated_at": "2026-06-04T15:10:00Z"
+      "updated_at": "2026-06-04T15:10:00Z",
+      "speed_max": 159.0,
+      "speed_last": 90.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   },
   {
@@ -356,7 +470,13 @@
       "registration_date": "2023-10-10",
       "is_available": true,
       "created_at": "2026-06-04T17:00:00Z",
-      "updated_at": "2026-06-04T17:00:00Z"
+      "updated_at": "2026-06-04T17:00:00Z",
+      "speed_max": 133.0,
+      "speed_last": 74.0,
+      "is_emergency": false,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "has_been_lost": false
     }
   }
 ]

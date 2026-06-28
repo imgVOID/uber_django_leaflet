@@ -1,0 +1,711 @@
+[
+  {
+    "model": "rides.ride",
+    "pk": 101,
+    "fields": {
+      "client": "9f116514-411a-464a-9111-c11111111111",
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 13,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5234 50.4501)",
+      "dropoff_position": "SRID=4326;POINT(30.5240 50.4510)",
+      "pickup_address": "Khreshchatyk St, 20/22, Kyiv",
+      "dropoff_address": "Khreshchatyk St, 28, Kyiv",
+      "price": "51.65",
+      "distance": 0.15,
+      "duration": 6,
+      "notes": "cargo_loaded",
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 101,
+    "fields": {
+      "ride": 101,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5234, 50.4501],
+                [30.5236, 50.4503],
+                [30.5238, 50.4506],
+                [30.5239, 50.4508],
+                [30.5240, 50.4510]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T10:00:00Z",
+                "2026-06-27T10:01:15Z",
+                "2026-06-27T10:02:30Z",
+                "2026-06-27T10:03:45Z",
+                "2026-06-27T10:05:00Z"
+              ],
+              "speeds": [25.0, 26.0, 28.0, 29.0, 30.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 25.0,
+      "speed_avg": 27.6,
+      "speed_max": 30.0,
+      "speed_last": 30.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 0.11,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 102,
+    "fields": {
+      "client": "2a226524-422a-4122-9222-222222222222",
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 6,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5234 50.4501)",
+      "dropoff_position": "SRID=4326;POINT(30.5240 50.4510)",
+      "pickup_address": "Khreshchatyk St, 20/22, Kyiv",
+      "dropoff_address": "Khreshchatyk St, 28, Kyiv",
+      "price": "51.65",
+      "distance": 0.11,
+      "notes": "cargo_loaded",
+      "created_at": "2026-06-27T11:00:00Z",
+      "updated_at": "2026-06-27T11:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 102,
+    "fields": {
+      "ride": 102,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5234, 50.4501],
+                [30.5236, 50.4503],
+                [30.5238, 50.4506],
+                [30.5239, 50.4508],
+                [30.5240, 50.4510]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T11:00:00Z",
+                "2026-06-27T11:01:20Z",
+                "2026-06-27T11:02:40Z",
+                "2026-06-27T11:04:00Z",
+                "2026-06-27T11:05:00Z"
+              ],
+              "speeds": [20.0, 21.0, 23.0, 24.0, 24.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 20.0,
+      "speed_avg": 22.4,
+      "speed_max": 24.0,
+      "speed_last": 24.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 0.11,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 103,
+    "fields": {
+      "client": "2a226524-422a-4122-9222-222222222222",
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 14,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5234 50.4501)",
+      "dropoff_position": "SRID=4326;POINT(30.5240 50.4510)",
+      "pickup_address": "Khreshchatyk St, 20/22, Kyiv",
+      "dropoff_address": "Khreshchatyk St, 28, Kyiv",
+      "price": "51.65",
+      "distance": 0.15,
+      "duration": 6,
+      "notes": "cargo_loaded",
+      "created_at": "2026-06-27T12:00:00Z",
+      "updated_at": "2026-06-27T12:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 103,
+    "fields": {
+      "ride": 103,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5234, 50.4501],
+                [30.5236, 50.4503],
+                [30.5238, 50.4506],
+                [30.5239, 50.4508],
+                [30.5240, 50.4510]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T12:00:00Z",
+                "2026-06-27T12:01:10Z",
+                "2026-06-27T12:02:20Z",
+                "2026-06-27T12:03:30Z",
+                "2026-06-27T12:04:30Z"
+              ],
+              "speeds": [28.0, 29.0, 31.0, 32.0, 32.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 28.0,
+      "speed_avg": 30.4,
+      "speed_max": 32.0,
+      "speed_last": 32.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 0.11,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 104,
+    "fields": {
+      "client": "3a336534-433a-4333-9333-333333333333",
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 8,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.4800 50.4300)",
+      "dropoff_position": "SRID=4326;POINT(30.4900 50.4400)",
+      "pickup_address": "Povitroflotskyi Ave, Solomianskyi District, Kyiv",
+      "dropoff_address": "Povitroflotskyi Ave, near Zhuliany, Kyiv",
+      "price": "69.80",
+      "distance": 1.50,
+      "duration": 8,
+      "notes": "no_cargo",
+      "created_at": "2026-06-27T08:00:00Z",
+      "updated_at": "2026-06-27T08:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 104,
+    "fields": {
+      "ride": 104,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4800, 50.4300],
+                [30.4825, 50.4325],
+                [30.4850, 50.4350],
+                [30.4875, 50.4375],
+                [30.4900, 50.4400]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T08:00:00Z",
+                "2026-06-27T08:01:15Z",
+                "2026-06-27T08:02:30Z",
+                "2026-06-27T08:03:45Z",
+                "2026-06-27T08:05:00Z"
+              ],
+              "speeds": [40.0, 41.0, 43.0, 42.0, 42.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 40.0,
+      "speed_avg": 41.6,
+      "speed_max": 43.0,
+      "speed_last": 42.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 1.32,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 105,
+    "fields": {
+      "client": "3a336534-433a-4333-9333-333333333333",
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "vehicle": 15,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5234 50.4501)",
+      "dropoff_position": "SRID=4326;POINT(30.5240 50.4510)",
+      "pickup_address": "Khreshchatyk St, 20/22, Kyiv",
+      "dropoff_address": "Khreshchatyk St, 28, Kyiv",
+      "price": "51.65",
+      "distance": 0.15,
+      "duration": 6,
+      "notes": "cargo_loaded",
+      "created_at": "2026-06-27T13:00:00Z",
+      "updated_at": "2026-06-27T13:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 105,
+    "fields": {
+      "ride": 105,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5234, 50.4501],
+                [30.5236, 50.4503],
+                [30.5238, 50.4506],
+                [30.5239, 50.4508],
+                [30.5240, 50.4510]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T13:00:00Z",
+                "2026-06-27T13:01:25Z",
+                "2026-06-27T13:02:50Z",
+                "2026-06-27T13:04:10Z",
+                "2026-06-27T13:05:00Z"
+              ],
+              "speeds": [22.0, 23.0, 25.0, 26.0, 26.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 22.0,
+      "speed_avg": 24.4,
+      "speed_max": 26.0,
+      "speed_last": 26.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 0.11,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 106,
+    "fields": {
+      "client": "4a446544-4444-4444-9444-444444444444",
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "vehicle": 9,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5234 50.4501)",
+      "dropoff_position": "SRID=4326;POINT(30.5240 50.4510)",
+      "pickup_address": "Khreshchatyk St, 20/22, Kyiv",
+      "dropoff_address": "Khreshchatyk St, 28, Kyiv",
+      "price": "51.65",
+      "distance": 0.15,
+      "duration": 6,
+      "notes": "cargo_loaded",
+      "created_at": "2026-06-27T14:00:00Z",
+      "updated_at": "2026-06-27T14:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 106,
+    "fields": {
+      "ride": 106,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5234, 50.4501],
+                [30.5236, 50.4503],
+                [30.5238, 50.4506],
+                [30.5239, 50.4508],
+                [30.5240, 50.4510]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T14:00:00Z",
+                "2026-06-27T14:01:10Z",
+                "2026-06-27T14:02:20Z",
+                "2026-06-27T14:03:30Z",
+                "2026-06-27T14:04:40Z"
+              ],
+              "speeds": [26.0, 27.0, 29.0, 30.0, 30.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 26.0,
+      "speed_avg": 28.4,
+      "speed_max": 30.0,
+      "speed_last": 30.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 0.11,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 107,
+    "fields": {
+      "client": "4a446544-4444-4444-9444-444444444444",
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "vehicle": 17,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5500 50.4800)",
+      "dropoff_position": "SRID=4326;POINT(30.5600 50.4900)",
+      "pickup_address": "Vozz'iednannia Ave, Darnytskyi District, Kyiv",
+      "dropoff_address": "Vozz'iednannia Ave, Left Bank, Kyiv",
+      "price": "69.80",
+      "distance": 1.7,
+      "duration": 7,
+      "notes": "no_cargo",
+      "created_at": "2026-06-27T08:00:00Z",
+      "updated_at": "2026-06-27T08:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 107,
+    "fields": {
+      "ride": 107,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5500, 50.4800],
+                [30.5525, 50.4825],
+                [30.5550, 50.4850],
+                [30.5575, 50.4875],
+                [30.5600, 50.4900]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T08:00:00Z",
+                "2026-06-27T08:01:10Z",
+                "2026-06-27T08:02:20Z",
+                "2026-06-27T08:03:30Z",
+                "2026-06-27T08:05:00Z"
+              ],
+              "speeds": [45.0, 46.0, 48.0, 47.0, 47.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 45.0,
+      "speed_avg": 46.6,
+      "speed_max": 48.0,
+      "speed_last": 47.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 1.32,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 108,
+    "fields": {
+      "client": "5a556555-4555-4555-9555-555555555555",
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "vehicle": 11,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5234 50.4501)",
+      "dropoff_position": "SRID=4326;POINT(30.5240 50.4510)",
+      "pickup_address": "Khreshchatyk St, 20/22, Kyiv",
+      "dropoff_address": "Khreshchatyk St, 28, Kyiv",
+      "price": "51.65",
+      "distance": 0.15,
+      "duration": 6,
+      "notes": "cargo_loaded",
+      "created_at": "2026-06-27T15:00:00Z",
+      "updated_at": "2026-06-27T15:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 108,
+    "fields": {
+      "ride": 108,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5234, 50.4501],
+                [30.5236, 50.4503],
+                [30.5238, 50.4506],
+                [30.5239, 50.4508],
+                [30.5240, 50.4510]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T15:00:00Z",
+                "2026-06-27T15:01:15Z",
+                "2026-06-27T15:02:30Z",
+                "2026-06-27T15:03:45Z",
+                "2026-06-27T15:05:00Z"
+              ],
+              "speeds": [24.0, 25.0, 27.0, 28.0, 28.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 24.0,
+      "speed_avg": 26.4,
+      "speed_max": 28.0,
+      "speed_last": 28.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 0.11,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 109,
+    "fields": {
+      "client": "5a556555-4555-4555-9555-555555555555",
+      "driver": "5d556555-4555-4555-9555-555555555555",
+      "vehicle": 18,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5800 50.5000)",
+      "dropoff_position": "SRID=4326;POINT(30.5900 50.5100)",
+      "pickup_address": "Maiakovskoho Ave, Desnianskyi District, Kyiv",
+      "dropoff_address": "Maiakovskoho Ave, Left Bank, Kyiv",
+      "price": "69.65",
+      "distance": 1.8,
+      "duration": 9,
+      "notes": "no_cargo",
+      "created_at": "2026-06-27T08:00:00Z",
+      "updated_at": "2026-06-27T08:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 109,
+    "fields": {
+      "ride": 109,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5800, 50.5000],
+                [30.5825, 50.5025],
+                [30.5850, 50.5050],
+                [30.5875, 50.5075],
+                [30.5900, 50.5100]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T08:00:00Z",
+                "2026-06-27T08:01:10Z",
+                "2026-06-27T08:02:20Z",
+                "2026-06-27T08:03:30Z",
+                "2026-06-27T08:05:00Z"
+              ],
+              "speeds": [50.0, 51.0, 53.0, 52.0, 52.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 50.0,
+      "speed_avg": 51.6,
+      "speed_max": 53.0,
+      "speed_last": 52.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 1.31,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 110,
+    "fields": {
+      "client": "9f116514-411a-464a-9111-c11111111111",
+      "driver": "5d556555-4555-4555-9555-555555555555",
+      "vehicle": 12,
+      "status": "completed",
+      "is_finished": true,
+      "is_empty": false,
+      "pickup_position": "SRID=4326;POINT(30.5234 50.4501)",
+      "dropoff_position": "SRID=4326;POINT(30.5240 50.4510)",
+      "pickup_address": "Khreshchatyk St, 20/22, Kyiv",
+      "dropoff_address": "Khreshchatyk St, 28, Kyiv",
+      "price": "51.65",
+      "distance": 0.15,
+      "duration": 6,
+      "notes": "cargo_loaded",
+      "created_at": "2026-06-27T16:00:00Z",
+      "updated_at": "2026-06-27T16:00:00Z"
+    }
+  },
+  {
+    "model": "rides.rideroute",
+    "pk": 110,
+    "fields": {
+      "ride": 110,
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5234, 50.4501],
+                [30.5236, 50.4503],
+                [30.5238, 50.4506],
+                [30.5239, 50.4508],
+                [30.5240, 50.4510]
+              ]
+            },
+            "properties": {
+              "times": [
+                "2026-06-27T16:00:00Z",
+                "2026-06-27T16:01:15Z",
+                "2026-06-27T16:02:30Z",
+                "2026-06-27T16:03:45Z",
+                "2026-06-27T16:05:00Z"
+              ],
+              "speeds": [21.0, 22.0, 24.0, 25.0, 25.0],
+              "headings": [45, 45, 45, 45, 45],
+              "altitudes": [100, 100, 100, 100, 100],
+              "accuracies": [5, 5, 5, 5, 5]
+            }
+          }
+        ]
+      },
+      "speed_min": 21.0,
+      "speed_avg": 23.4,
+      "speed_max": 25.0,
+      "speed_last": 25.0,
+      "altitude_min": 100.0,
+      "altitude_avg": 100.0,
+      "altitude_max": 100.0,
+      "distance": 0.11,
+      "duration": 5,
+      "created_at": "2026-06-27T10:00:00Z",
+      "updated_at": "2026-06-27T10:00:00Z"
+    }
+  }
+]

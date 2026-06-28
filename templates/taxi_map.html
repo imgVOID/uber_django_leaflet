@@ -1,27 +1,63 @@
 {% load static %}
 {% load django_vite %}
+{% load django_bootstrap5 %}
 <!doctype html>
 <html lang="uk">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Nearby Drivers Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    {% bootstrap_css %}
     {% vite_hmr_client %}
     {% vite_asset 'assets/taxi_map.ts' %}
     <style>
       html, body, #map { height: 100%; margin: 0; padding: 0; }
       .map-wrap { height: 100vh; }
       .leaflet-control-custom { background: white; padding: 8px; border-radius: 4px; box-shadow: 0 1px 5px rgba(0,0,0,0.4); }
-      .btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
-      .btn-success { background: #198754; color: white; margin-right: 6px; }
-      .btn-secondary { background: #6c757d; color: white; }
+      .leaflet-popup-content-wrapper { border-radius: 8px; padding: 0; overflow: hidden; }
+      .leaflet-popup-content { margin: 15px !important; }
+      .driver-popup { min-width: 180px; }
+      .status-row { display: flex; justify-content: space-between; margin: 10px 0; }
+      .map-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+      }
+      .map-btn {
+          background: white;
+          padding: 10px 15px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          cursor: pointer;
+          box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+          font-size: 16px;
+      }
+      .map-btn:hover { background: #f8f9fa; }
     </style>
   </head>
   <body>
     <div id="map" class="map-wrap"></div>
-
+  <script>
+    window.rideData = {
+        from: "{{ ride_data.from_addr|default:'' }}",
+        to: "{{ ride_data.to_addr|default:'' }}",
+        startLat: {{ ride_data.start_lat|default:"null" }},
+        startLng: {{ ride_data.start_lng|default:"null" }},
+        endLat: {{ ride_data.end_lat|default:"null" }},
+        endLng: {{ ride_data.end_lng|default:"null" }},
+        ride_id: {{ ride_data.ride_id|default:"null" }},
+        driver_id: {{ ride_data.driver_id|default:"null" }},
+        status: "{{ ride.status }}"
+    };
+    console.log("Loaded rideData:", window.rideData);
+</script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="{% static 'js/taxi_map.js' %}"></script>
+    
   </body>
+    {% bootstrap_javascript %}
 </html>

@@ -1,0 +1,602 @@
+[
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 1,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-01-04T08:00:00Z",
+      "lat": 50.4504,
+      "lng": 30.5182,
+      "speed": 7.0,
+      "heading": 40.3,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 2,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-02-04T14:00:00Z",
+      "lat": 50.4519,
+      "lng": 30.5194,
+      "speed": 10.5,
+      "heading": 57.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 3,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-03-04T20:00:00Z",
+      "lat": 50.4534,
+      "lng": 30.5206,
+      "speed": 13.0,
+      "heading": 74.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 4,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-04-14T08:00:00Z",
+      "lat": 50.4549,
+      "lng": 30.5218,
+      "speed": 16.5,
+      "heading": 91.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 5,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-05-14T14:00:00Z",
+      "lat": 50.4564,
+      "lng": 30.5230,
+      "speed": 19.0,
+      "heading": 108.3,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 6,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-06-14T20:00:00Z",
+      "lat": 50.4579,
+      "lng": 30.5242,
+      "speed": 22.5,
+      "heading": 125.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 7,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-01-24T08:00:00Z",
+      "lat": 50.4594,
+      "lng": 30.5254,
+      "speed": 25.0,
+      "heading": 142.0,
+      "has_blown_tire": true,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 8,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-02-24T14:00:00Z",
+      "lat": 50.4609,
+      "lng": 30.5266,
+      "speed": 28.5,
+      "heading": 159.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 9,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-03-24T20:00:00Z",
+      "lat": 50.4624,
+      "lng": 30.5278,
+      "speed": 31.0,
+      "heading": 176.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 10,
+    "fields": {
+      "vehicle": 1,
+      "timestamp": "2026-04-24T08:00:00Z",
+      "lat": 50.4639,
+      "lng": 30.5290,
+      "speed": 34.5,
+      "heading": 193.0,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 11,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-01-05T08:00:00Z",
+      "lat": 50.4606,
+      "lng": 30.5104,
+      "speed": 14.0,
+      "heading": 80.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 12,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-02-05T14:00:00Z",
+      "lat": 50.4621,
+      "lng": 30.5116,
+      "speed": 17.5,
+      "heading": 97.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 13,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-03-05T20:00:00Z",
+      "lat": 50.4636,
+      "lng": 30.5128,
+      "speed": 20.0,
+      "heading": 114.0,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 14,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-04-15T08:00:00Z",
+      "lat": 50.4651,
+      "lng": 30.514,
+      "speed": 23.5,
+      "heading": 131.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 15,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-05-15T14:00:00Z",
+      "lat": 50.4666,
+      "lng": 30.5152,
+      "speed": 26.0,
+      "heading": 148.3,
+      "has_blown_tire": true,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 16,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-06-15T20:00:00Z",
+      "lat": 50.4681,
+      "lng": 30.5164,
+      "speed": 29.5,
+      "heading": 165.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 17,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-01-25T08:00:00Z",
+      "lat": 50.4696,
+      "lng": 30.5176,
+      "speed": 32.0,
+      "heading": 182.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 18,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-02-25T14:00:00Z",
+      "lat": 50.4711,
+      "lng": 30.5188,
+      "speed": 35.5,
+      "heading": 199.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 19,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-03-25T20:00:00Z",
+      "lat": 50.4726,
+      "lng": 30.52,
+      "speed": 38.0,
+      "heading": 216.0,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 20,
+    "fields": {
+      "vehicle": 2,
+      "timestamp": "2026-04-25T08:00:00Z",
+      "lat": 50.4741,
+      "lng": 30.5212,
+      "speed": 41.5,
+      "heading": 233.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 21,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-01-06T08:00:00Z",
+      "lat": 50.4709,
+      "lng": 30.5056,
+      "speed": 21.0,
+      "heading": 120.3,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 22,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-02-06T14:00:00Z",
+      "lat": 50.4724,
+      "lng": 30.5068,
+      "speed": 24.5,
+      "heading": 137.0,
+      "has_blown_tire": true,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 23,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-03-06T20:00:00Z",
+      "lat": 50.4739,
+      "lng": 30.508,
+      "speed": 27.0,
+      "heading": 154.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 24,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-04-16T08:00:00Z",
+      "lat": 50.4754,
+      "lng": 30.5092,
+      "speed": 30.5,
+      "heading": 171.0,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 25,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-05-16T14:00:00Z",
+      "lat": 50.4769,
+      "lng": 30.5104,
+      "speed": 33.0,
+      "heading": 188.3,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 26,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-06-16T20:00:00Z",
+      "lat": 50.4784,
+      "lng": 30.5116,
+      "speed": 36.5,
+      "heading": 205.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 27,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-01-26T08:00:00Z",
+      "lat": 50.4799,
+      "lng": 30.5128,
+      "speed": 39.0,
+      "heading": 222.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 28,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-02-26T14:00:00Z",
+      "lat": 50.4814,
+      "lng": 30.514,
+      "speed": 42.5,
+      "heading": 239.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 29,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-03-26T20:00:00Z",
+      "lat": 50.4829,
+      "lng": 30.5152,
+      "speed": 45.0,
+      "heading": 256.0,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 30,
+    "fields": {
+      "vehicle": 3,
+      "timestamp": "2026-04-26T08:00:00Z",
+      "lat": 50.4844,
+      "lng": 30.5164,
+      "speed": 48.5,
+      "heading": 273.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 31,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-01-07T08:00:00Z",
+      "lat": 50.4412,
+      "lng": 30.4988,
+      "speed": 28.0,
+      "heading": 160.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 32,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-02-07T14:00:00Z",
+      "lat": 50.4427,
+      "lng": 30.5,
+      "speed": 31.5,
+      "heading": 177.0,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 33,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-03-07T20:00:00Z",
+      "lat": 50.4442,
+      "lng": 30.5012,
+      "speed": 34.0,
+      "heading": 194.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 34,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-04-17T08:00:00Z",
+      "lat": 50.4457,
+      "lng": 30.5024,
+      "speed": 37.5,
+      "heading": 211.0,
+      "has_blown_tire": true,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 35,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-05-17T14:00:00Z",
+      "lat": 50.4472,
+      "lng": 30.5036,
+      "speed": 40.0,
+      "heading": 228.3,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 36,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-06-17T20:00:00Z",
+      "lat": 50.4487,
+      "lng": 30.5048,
+      "speed": 43.5,
+      "heading": 245.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 37,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-01-27T08:00:00Z",
+      "lat": 50.4502,
+      "lng": 30.506,
+      "speed": 46.0,
+      "heading": 262.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 38,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-02-27T14:00:00Z",
+      "lat": 50.4517,
+      "lng": 30.5072,
+      "speed": 49.5,
+      "heading": 279.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 39,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-03-27T20:00:00Z",
+      "lat": 50.4532,
+      "lng": 30.5084,
+      "speed": 52.0,
+      "heading": 296.0,
+      "has_blown_tire": false,
+      "has_low_fuel": true,
+      "is_cargo_active": true
+    }
+  },
+  {
+    "model": "rides.vehicletimesnapshot",
+    "pk": 40,
+    "fields": {
+      "vehicle": 4,
+      "timestamp": "2026-04-27T08:00:00Z",
+      "lat": 50.4547,
+      "lng": 30.5096,
+      "speed": 55.5,
+      "heading": 313.0,
+      "has_blown_tire": false,
+      "has_low_fuel": false,
+      "is_cargo_active": false
+    }
+  }
+]

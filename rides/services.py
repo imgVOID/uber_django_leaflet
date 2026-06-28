@@ -1,57 +1,57 @@
-from math import radians, sin, cos, sqrt, atan2
 from typing import List, Dict
 
-from .models import DriverLocation
+from django.contrib.gis.geos import Point
+from django.contrib.gis.measure import D
+from django.contrib.gis.db.models.functions import Distance as GeoDistance
+from django.db.models import Exists, OuterRef
+from .models import DriverLocation, Ride
 
 
 class DriverLocator:
-    """Adapter to fetch nearby drivers using GeoDjango/PostGIS when available,
-    otherwise falls back to a Python haversine implementation.
-    Returns list of dicts with driver/vehicle/position/distance_km.
+    """Adapter to fetch nearby drivers using GeoDjango/PostGIS
     """
 
     @staticmethod
-    def haversine(lat1, lon1, lat2, lon2):
-        R = 6371.0
-        lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-        dlat = lat2 - lat1
-        dlon = lon2 - lon1
-        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-        c = 2 * atan2(sqrt(a), sqrt(1-a))
-        return R * c
-
-    @staticmethod
-    def get_nearby_drivers(lat: float, lng: float, radius_km: float = 5.0) -> List[Dict]:
-        from django.contrib.gis.geos import Point
-        from django.contrib.gis.measure import D
-        from django.contrib.gis.db.models.functions import Distance
-
+    def get_nearby_drivers(lat: float, lng: float, radius_km: float = 5.0, driver_id=None) -> List[Dict]:
         point = Point(lng, lat, srid=4326)
         
-        # Оптимізація: select_related для мінімізації SQL-запитів до моделей Driver та Vehicle
-        qs = DriverLocation.objects.filter(
-            position__distance_lte=(point, D(km=radius_km)),
-            driver__is_active_driver=True,
-            driver__is_verified=True,
-        ).select_related('driver', 'vehicle').annotate(
-            distance=Distance('position', point)
-        ).order_by('distance')[:200]
+        if driver_id:
+            qs = DriverLocation.objects.filter(driver__user_id=driver_id)
+        else:
+            busy_drivers = Ride.objects.filter(
+                driver_id=OuterRef('driver_id'),
+                status__in=['accepted', 'arrived', 'in_progress']
+            )
+            qs = DriverLocation.objects.filter(
+                position__distance_lte=(point, D(km=radius_km)),
+                driver__is_active_driver=True,
+                driver__is_verified=True,
+            ).annotate(
+                is_busy=Exists(busy_drivers)
+            ).filter(is_busy=False)
 
-        results = []
-        for loc in qs:
-            color = getattr(loc.vehicle, 'color', '#fd7e14') 
-            
-            d_val = loc.distance.km if hasattr(loc.distance, 'km') else float(loc.distance)
+        qs = qs.annotate(dist=GeoDistance('position', point)) \
+            .select_related('driver', 'vehicle') \
+            .order_by('dist')[:200]
 
-            results.append({
-                'driver_id': str(loc.driver.user.pk),
+        return [
+            {
+                'id': loc.driver.user.pk,
                 'driver_name': loc.driver.name,
-                'vehicle': str(loc.vehicle),
                 'lat': loc.position.y,
                 'lng': loc.position.x,
-                'distance_km': round(d_val, 3),
-                'color': color.lower()
-            })
-            
-
-        return results
+                'brand': loc.vehicle.brand,
+                'model': loc.vehicle.model,
+                'vehicle_id': loc.vehicle.id,
+                'vehicle_type': loc.vehicle.vehicle_type,
+                'speed_last': loc.vehicle.speed_last,
+                'distance_km': round(loc.dist.km, 3) if loc.dist else 0,
+                'color': getattr(loc.vehicle, 'color', '#fd7e14').lower(),
+                'heading': getattr(loc, 'heading', 0),
+                'capacity': getattr(loc.vehicle, 'capacity', 4),
+                'year': getattr(loc.vehicle, 'year', 0),
+                'has_blown_tire': getattr(loc.vehicle, 'has_blown_tire', False),
+                'has_low_fuel': getattr(loc.vehicle, 'has_low_fuel', False)
+            }
+            for loc in qs
+        ]

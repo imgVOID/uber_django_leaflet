@@ -5,6 +5,73 @@ from accounts.models import DriverProfile, ClientProfile
 from vehicles.models import Vehicle
 
 
+class CargoShipment(models.Model):
+    driver = models.ForeignKey(DriverProfile, on_delete=models.SET_NULL, null=True, blank=True)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name='cargo_shipments')
+    is_active = models.BooleanField(default=True)
+    description = models.CharField(max_length=255, blank=True)
+    started_at = models.DateTimeField(auto_now_add=True)
+    finished_at = models.DateTimeField(null=True, blank=True)
+    start_point = gis_models.PointField(srid=4326, null=True, blank=True)
+    history = models.JSONField(
+        default=dict, blank=True, 
+        help_text="GeoJSON: {'type': 'FeatureCollection', 'features': [...]}"
+    )
+    speed_min = models.FloatField(null=True, blank=True, help_text="Minimum speed in km/h")
+    speed_avg = models.FloatField(null=True, blank=True, help_text="Average speed in km/h")
+    speed_max = models.FloatField(null=True, blank=True, help_text="Maximum speed in km/h")
+    speed_last = models.FloatField(null=True, blank=True, help_text="Last speed in km/h")
+    altitude_min = models.FloatField(null=True, blank=True, help_text="Minimum altitude in km")
+    altitude_avg = models.FloatField(null=True, blank=True, help_text="Average altitude in km")
+    altitude_max = models.FloatField(null=True, blank=True, help_text="Maximum altitude in km")
+
+    def __str__(self):
+        return f"Cargo {self.id} on {self.vehicle.model}"
+    
+    def save(self, *args, **kwargs):
+        if not self.start_point and self.history:
+            from django.contrib.gis.geos import Point
+            try:
+                coords = self.history['features'][0]['geometry']['coordinates']
+                self.start_point = Point(coords[0], coords[1], srid=4326)
+            except (KeyError, IndexError, TypeError):
+                pass
+        super().save(*args, **kwargs)
+
+
+class VehicleTimeSnapshot(models.Model):
+    """
+    Знімок стану авто на конкретний момент часу.
+    Використовується для реалізації режиму Rewind (історія за 6 місяців).
+    """
+    vehicle = models.ForeignKey(
+        Vehicle, 
+        on_delete=models.CASCADE, 
+        related_name='time_snapshots'
+    )
+    timestamp = models.DateTimeField(db_index=True, help_text="Точний момент знімка")
+
+    lat = models.FloatField()
+    lng = models.FloatField()
+
+    has_blown_tire = models.BooleanField(default=False, help_text="Whether the vehicle has a blown tire")
+    has_low_fuel = models.BooleanField(default=False, help_text="Whether the vehicle has low fuel")
+
+    speed = models.FloatField(help_text="Швидкість авто на момент знімка")
+    heading = models.FloatField(null=True, blank=True, help_text="Напрямок руху в градусах")
+
+    is_cargo_active = models.BooleanField(default=False)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['vehicle', '-timestamp']),
+        ]
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"{self.vehicle.model} @ {self.timestamp}"
+
+
 class DriverLocation(models.Model):
     """
     Model to track driver and vehicle position in real-time.
@@ -59,6 +126,7 @@ class Ride(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
+        ('arrived', 'Arrived'),
         ('in_progress', 'In Progress'),
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
@@ -108,9 +176,9 @@ class Ride(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', help_text="Current status of the ride")
 
     # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
     started_at = models.DateTimeField(null=True, blank=True, help_text="When the ride started")
     finished_at = models.DateTimeField(null=True, blank=True, help_text="When the ride finished")
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -127,58 +195,36 @@ class Ride(models.Model):
         driver_name = self.driver.name if self.driver else "No Driver"
         return f"Ride by {self.client.name} with {driver_name} - {self.status}"
 
-    def get_nearby_available_drivers(self, radius_km=5):
-        """
-        Get available drivers within radius_km of pickup location.
-        Returns list of (DriverProfile, distance_km) tuples sorted by distance.
-        
-        For MVP: Uses simple haversine distance calculation (no PostGIS required).
-        """
-        if not self.pickup_position:
-            return []
-        
-        from math import radians, sin, cos, sqrt, atan2
-        
-        def haversine_distance(lat1, lon1, lat2, lon2):
-            """Calculate distance in km between two coordinates."""
-            R = 6371  # Earth radius in km
-            lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
-            dlat = lat2 - lat1
-            dlon = lon2 - lon1
-            a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-            c = 2 * atan2(sqrt(a), sqrt(1-a))
-            return R * c
-        
-        nearby_drivers = []
-        
-        # Get all available drivers' locations
-        for location in DriverLocation.objects.select_related('driver').filter(
-            driver__driverprofile__is_active_driver=True,
-            driver__driverprofile__is_verified=True
-        ):
-            driver = location.driver
-            
-            # Check if driver has available vehicle and no active ride
-            if not driver.is_available:
-                continue
-            
-            # Calculate distance
-            distance = haversine_distance(
-                self.pickup_position.y,
-                self.pickup_position.x,
-                location.position.y,
-                location.position.x
-            )
-            
-            if distance <= radius_km:
-                nearby_drivers.append((driver, round(distance, 2)))
-        
-        # Sort by distance
-        nearby_drivers.sort(key=lambda x: x[1])
-        return nearby_drivers
-
     def save(self, *args, **kwargs):
         self.is_empty = self.driver is None
         self.is_finished = self.status == 'completed'
         
         super().save(*args, **kwargs)
+
+
+# Creating when the driver arrived
+class RideRoute(models.Model):
+    ride = models.OneToOneField(Ride, on_delete=models.CASCADE, primary_key=True)
+    history = models.JSONField(
+        default=dict, blank=True, 
+        help_text="GeoJSON: {'type': 'FeatureCollection', 'features': [...]}"
+    )
+    speed_min = models.FloatField(null=True, blank=True, help_text="Minimum speed in km/h")
+    speed_avg = models.FloatField(null=True, blank=True, help_text="Average speed in km/h")
+    speed_max = models.FloatField(null=True, blank=True, help_text="Maximum speed in km/h")
+    speed_last = models.FloatField(null=True, blank=True, help_text="Last speed in km/h")
+    altitude_min = models.FloatField(null=True, blank=True, help_text="Minimum altitude in km")
+    altitude_avg = models.FloatField(null=True, blank=True, help_text="Average altitude in km")
+    altitude_max = models.FloatField(null=True, blank=True, help_text="Maximum altitude in km")
+    distance = models.FloatField(null=True, blank=True, help_text="Real distance in km")
+    duration = models.IntegerField(null=True, blank=True, help_text="Real duration in minutes")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def status(self):
+        return self.ride.status
+    
+    @property
+    def is_finished(self):
+        return self.ride.is_finished

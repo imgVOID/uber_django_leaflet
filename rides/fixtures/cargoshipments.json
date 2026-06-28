@@ -1,0 +1,762 @@
+[
+  {
+    "model": "rides.cargoshipment",
+    "pk": 1,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 1,
+      "is_active": false,
+      "description": "Shuliavka to Lukianivska corridor #1",
+      "started_at": "2026-01-05T08:10:00Z",
+      "finished_at": "2026-01-05T08:52:00Z",
+      "start_point": "SRID=4326;POINT(30.4531 50.4536)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4531, 50.4536],
+                [30.4488, 50.4547],
+                [30.4421, 50.4574],
+                [30.4358, 50.4602]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 14.2,
+      "speed_avg": 23.8,
+      "speed_max": 39.1,
+      "speed_last": 18.7,
+      "altitude_min": 176.0,
+      "altitude_avg": 179.4,
+      "altitude_max": 183.0
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 2,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 2,
+      "is_active": false,
+      "description": "Shuliavka to Podil corridor #2",
+      "started_at": "2026-01-19T10:10:00Z",
+      "finished_at": "2026-01-19T10:58:00Z",
+      "start_point": "SRID=4326;POINT(30.4524 50.4540)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4524, 50.4540],
+                [30.4482, 50.4518],
+                [30.4440, 50.4486],
+                [30.4408, 50.4442]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.6,
+      "speed_avg": 21.9,
+      "speed_max": 36.5,
+      "speed_last": 17.1,
+      "altitude_min": 175.8,
+      "altitude_avg": 178.9,
+      "altitude_max": 182.4
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 3,
+    "fields": {
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "vehicle": 3,
+      "is_active": false,
+      "description": "Shuliavka to Dorohozhychi corridor #3",
+      "started_at": "2026-02-02T12:10:00Z",
+      "finished_at": "2026-02-02T12:46:00Z",
+      "start_point": "SRID=4326;POINT(30.4540 50.4528)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4540, 50.4528],
+                [30.4551, 50.4559],
+                [30.4589, 50.4598],
+                [30.4637, 50.4631]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 13.1,
+      "speed_avg": 25.7,
+      "speed_max": 41.0,
+      "speed_last": 19.4,
+      "altitude_min": 176.6,
+      "altitude_avg": 180.1,
+      "altitude_max": 183.8
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 4,
+    "fields": {
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "vehicle": 4,
+      "is_active": false,
+      "description": "Shuliavka to Vokzal corridor #4",
+      "started_at": "2026-02-16T14:10:00Z",
+      "finished_at": "2026-02-16T14:55:00Z",
+      "start_point": "SRID=4326;POINT(30.4518 50.4534)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4518, 50.4534],
+                [30.4562, 50.4510],
+                [30.4618, 50.4479],
+                [30.4675, 50.4446]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 11.8,
+      "speed_avg": 22.4,
+      "speed_max": 37.2,
+      "speed_last": 16.2,
+      "altitude_min": 175.9,
+      "altitude_avg": 179.0,
+      "altitude_max": 182.8
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 5,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 1,
+      "is_active": false,
+      "description": "Shuliavka to the center corridor #5",
+      "started_at": "2026-03-03T08:10:00Z",
+      "finished_at": "2026-03-03T08:54:00Z",
+      "start_point": "SRID=4326;POINT(30.4548 50.4544)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4548, 50.4544],
+                [30.4599, 50.4567],
+                [30.4680, 50.4588],
+                [30.4795, 50.4609]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 15.0,
+      "speed_avg": 26.8,
+      "speed_max": 42.0,
+      "speed_last": 20.5,
+      "altitude_min": 176.2,
+      "altitude_avg": 180.0,
+      "altitude_max": 183.6
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 6,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 2,
+      "is_active": false,
+      "description": "Shuliavka to Syrets corridor #6",
+      "started_at": "2026-03-17T10:10:00Z",
+      "finished_at": "2026-03-17T10:51:00Z",
+      "start_point": "SRID=4326;POINT(30.4527 50.4529)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4527, 50.4529],
+                [30.4490, 50.4565],
+                [30.4452, 50.4611],
+                [30.4394, 50.4668]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.9,
+      "speed_avg": 23.1,
+      "speed_max": 38.8,
+      "speed_last": 18.0,
+      "altitude_min": 176.4,
+      "altitude_avg": 179.6,
+      "altitude_max": 183.1
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 7,
+    "fields": {
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "vehicle": 3,
+      "is_active": false,
+      "description": "Shuliavka to Shevchenkivskyi center corridor #7",
+      "started_at": "2026-04-01T12:10:00Z",
+      "finished_at": "2026-04-01T12:48:00Z",
+      "start_point": "SRID=4326;POINT(30.4535 50.4548)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4535, 50.4548],
+                [30.4575, 50.4517],
+                [30.4628, 50.4482],
+                [30.4701, 50.4449]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 11.4,
+      "speed_avg": 22.8,
+      "speed_max": 36.9,
+      "speed_last": 17.5,
+      "altitude_min": 175.7,
+      "altitude_avg": 178.8,
+      "altitude_max": 182.6
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 8,
+    "fields": {
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "vehicle": 4,
+      "is_active": false,
+      "description": "Common route A #8",
+      "started_at": "2026-04-15T14:10:00Z",
+      "finished_at": "2026-04-15T14:46:00Z",
+      "start_point": "SRID=4326;POINT(30.4515 50.4530)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4515, 50.4530],
+                [30.4555, 50.4540],
+                [30.4625, 50.4538],
+                [30.4705, 50.4529]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.2,
+      "speed_avg": 24.9,
+      "speed_max": 39.0,
+      "speed_last": 18.6,
+      "altitude_min": 176.1,
+      "altitude_avg": 180.3,
+      "altitude_max": 183.7
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 9,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 1,
+      "is_active": false,
+      "description": "Common route A #9",
+      "started_at": "2026-05-05T08:10:00Z",
+      "finished_at": "2026-05-05T08:45:00Z",
+      "start_point": "SRID=4326;POINT(30.4516 50.4531)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4516, 50.4531],
+                [30.4556, 50.4541],
+                [30.4626, 50.4539],
+                [30.4706, 50.4530]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.4,
+      "speed_avg": 25.1,
+      "speed_max": 39.2,
+      "speed_last": 18.9,
+      "altitude_min": 176.0,
+      "altitude_avg": 180.2,
+      "altitude_max": 183.6
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 10,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 2,
+      "is_active": false,
+      "description": "Common route A #10",
+      "started_at": "2026-05-19T10:10:00Z",
+      "finished_at": "2026-05-19T10:46:00Z",
+      "start_point": "SRID=4326;POINT(30.4514 50.4529)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4514, 50.4529],
+                [30.4554, 50.4539],
+                [30.4624, 50.4537],
+                [30.4704, 50.4528]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.1,
+      "speed_avg": 24.8,
+      "speed_max": 39.1,
+      "speed_last": 18.4,
+      "altitude_min": 176.2,
+      "altitude_avg": 180.1,
+      "altitude_max": 183.5
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 11,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 1,
+      "is_active": false,
+      "description": "Shuliavka to Lukianivska corridor #1",
+      "started_at": "2026-01-05T08:10:00Z",
+      "finished_at": "2026-01-05T08:52:00Z",
+      "start_point": "SRID=4326;POINT(30.4536 50.4536)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4536, 50.4536],
+                [30.4488, 50.4547],
+                [30.4421, 50.4574],
+                [30.4358, 50.4602]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 14.2,
+      "speed_avg": 23.8,
+      "speed_max": 39.1,
+      "speed_last": 18.7,
+      "altitude_min": 176.0,
+      "altitude_avg": 179.4,
+      "altitude_max": 183.0
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 12,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 2,
+      "is_active": false,
+      "description": "Podil to center corridor #2",
+      "started_at": "2026-01-19T10:10:00Z",
+      "finished_at": "2026-01-19T10:58:00Z",
+      "start_point": "SRID=4326;POINT(30.5201 50.4592)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5201, 50.4592],
+                [30.5152, 50.4572],
+                [30.5078, 50.4545],
+                [30.5001, 50.4517]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.6,
+      "speed_avg": 21.9,
+      "speed_max": 36.5,
+      "speed_last": 17.1,
+      "altitude_min": 175.8,
+      "altitude_avg": 178.9,
+      "altitude_max": 182.4
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 13,
+    "fields": {
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "vehicle": 3,
+      "is_active": false,
+      "description": "Syrets to Dorohozhychi corridor #3",
+      "started_at": "2026-02-02T12:10:00Z",
+      "finished_at": "2026-02-02T12:46:00Z",
+      "start_point": "SRID=4326;POINT(30.4334 50.4702)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4334, 50.4702],
+                [30.4375, 50.4685],
+                [30.4438, 50.4660],
+                [30.4508, 50.4632]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 13.1,
+      "speed_avg": 25.7,
+      "speed_max": 41.0,
+      "speed_last": 19.4,
+      "altitude_min": 176.6,
+      "altitude_avg": 180.1,
+      "altitude_max": 183.8
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 14,
+    "fields": {
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "vehicle": 4,
+      "is_active": false,
+      "description": "Vokzal to Solomianskyi corridor #4",
+      "started_at": "2026-02-16T14:10:00Z",
+      "finished_at": "2026-02-16T14:55:00Z",
+      "start_point": "SRID=4326;POINT(30.4885 50.4410)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4885, 50.4410],
+                [30.4828, 50.4436],
+                [30.4759, 50.4465],
+                [30.4682, 50.4498]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 11.8,
+      "speed_avg": 22.4,
+      "speed_max": 37.2,
+      "speed_last": 16.2,
+      "altitude_min": 175.9,
+      "altitude_avg": 179.0,
+      "altitude_max": 182.8
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 15,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 1,
+      "is_active": false,
+      "description": "Common route A #5",
+      "started_at": "2026-03-03T08:10:00Z",
+      "finished_at": "2026-03-03T08:54:00Z",
+      "start_point": "SRID=4326;POINT(30.4515 50.4535)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4515, 50.4535],
+                [30.4555, 50.4540],
+                [30.4625, 50.4538],
+                [30.4705, 50.4529]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 15.0,
+      "speed_avg": 26.8,
+      "speed_max": 42.0,
+      "speed_last": 20.5,
+      "altitude_min": 176.2,
+      "altitude_avg": 180.0,
+      "altitude_max": 183.6
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 16,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 2,
+      "is_active": false,
+      "description": "KPI to center corridor #6",
+      "started_at": "2026-03-17T10:10:00Z",
+      "finished_at": "2026-03-17T10:51:00Z",
+      "start_point": "SRID=4326;POINT(30.5132 50.4510)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5132, 50.4510],
+                [30.5090, 50.4521],
+                [30.5032, 50.4534],
+                [30.4965, 50.4546]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.9,
+      "speed_avg": 23.1,
+      "speed_max": 38.8,
+      "speed_last": 18.0,
+      "altitude_min": 176.4,
+      "altitude_avg": 179.6,
+      "altitude_max": 183.1
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 17,
+    "fields": {
+      "driver": "3d336534-433a-4333-9333-333333333333",
+      "vehicle": 3,
+      "is_active": false,
+      "description": "Shevchenkivskyi center corridor #7",
+      "started_at": "2026-04-01T12:10:00Z",
+      "finished_at": "2026-04-01T12:48:00Z",
+      "start_point": "SRID=4326;POINT(30.5168 50.4475)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.5168, 50.4475],
+                [30.5110, 50.4492],
+                [30.5042, 50.4510],
+                [30.4958, 50.4535]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 11.4,
+      "speed_avg": 22.8,
+      "speed_max": 36.9,
+      "speed_last": 17.5,
+      "altitude_min": 175.7,
+      "altitude_avg": 178.8,
+      "altitude_max": 182.6
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 18,
+    "fields": {
+      "driver": "4d446544-4444-4444-9444-444444444444",
+      "vehicle": 4,
+      "is_active": false,
+      "description": "Common route A #8",
+      "started_at": "2026-04-15T14:10:00Z",
+      "finished_at": "2026-04-15T14:46:00Z",
+      "start_point": "SRID=4326;POINT(30.4516 50.4532)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4516, 50.4532],
+                [30.4556, 50.4541],
+                [30.4626, 50.4539],
+                [30.4706, 50.4530]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.2,
+      "speed_avg": 24.9,
+      "speed_max": 39.0,
+      "speed_last": 18.6,
+      "altitude_min": 176.1,
+      "altitude_avg": 180.3,
+      "altitude_max": 183.7
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 19,
+    "fields": {
+      "driver": "1d116514-411a-4111-9111-111111111111",
+      "vehicle": 1,
+      "is_active": false,
+      "description": "Common route A #9",
+      "started_at": "2026-05-05T08:10:00Z",
+      "finished_at": "2026-05-05T08:45:00Z",
+      "start_point": "SRID=4326;POINT(30.4517 50.4530)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4517, 50.4530],
+                [30.4557, 50.4540],
+                [30.4627, 50.4538],
+                [30.4707, 50.4529]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.4,
+      "speed_avg": 25.1,
+      "speed_max": 39.2,
+      "speed_last": 18.9,
+      "altitude_min": 176.0,
+      "altitude_avg": 180.2,
+      "altitude_max": 183.6
+    }
+  },
+  {
+    "model": "rides.cargoshipment",
+    "pk": 20,
+    "fields": {
+      "driver": "2d226524-422a-4222-9222-222222222222",
+      "vehicle": 2,
+      "is_active": false,
+      "description": "Common route A #10",
+      "started_at": "2026-05-19T10:10:00Z",
+      "finished_at": "2026-05-19T10:46:00Z",
+      "start_point": "SRID=4326;POINT(30.4514 50.4528)",
+      "history": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [30.4514, 50.4528],
+                [30.4554, 50.4539],
+                [30.4624, 50.4537],
+                [30.4704, 50.4528]
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      },
+      "speed_min": 12.1,
+      "speed_avg": 24.8,
+      "speed_max": 39.1,
+      "speed_last": 18.4,
+      "altitude_min": 176.2,
+      "altitude_avg": 180.1,
+      "altitude_max": 183.5
+    }
+  }
+]

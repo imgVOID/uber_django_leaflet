@@ -4,7 +4,7 @@
     "pk": "9f116514-411a-464a-9111-c11111111111",
     "fields": {
       "email": "client1@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "client",
       "is_staff": false,
       "is_active": true,
@@ -20,7 +20,7 @@
     "pk": "2a226524-422a-4122-9222-222222222222",
     "fields": {
       "email": "client2@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "client",
       "is_staff": false,
       "is_active": true,
@@ -36,7 +36,7 @@
     "pk": "3a336534-433a-4333-9333-333333333333",
     "fields": {
       "email": "client3@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "client",
       "is_staff": false,
       "is_active": true,
@@ -52,7 +52,7 @@
     "pk": "4a446544-4444-4444-9444-444444444444",
     "fields": {
       "email": "client4@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "client",
       "is_staff": false,
       "is_active": true,
@@ -68,7 +68,7 @@
     "pk": "5a556555-4555-4555-9555-555555555555",
     "fields": {
       "email": "client5@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "client",
       "is_staff": false,
       "is_active": false,
@@ -84,7 +84,7 @@
     "pk": "1d116514-411a-4111-9111-111111111111",
     "fields": {
       "email": "driver1@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "driver",
       "is_staff": false,
       "is_active": true,
@@ -100,7 +100,7 @@
     "pk": "2d226524-422a-4222-9222-222222222222",
     "fields": {
       "email": "driver2@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "driver",
       "is_staff": false,
       "is_active": true,
@@ -116,7 +116,7 @@
     "pk": "3d336534-433a-4333-9333-333333333333",
     "fields": {
       "email": "driver3@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "driver",
       "is_staff": false,
       "is_active": true,
@@ -132,7 +132,7 @@
     "pk": "4d446544-4444-4444-9444-444444444444",
     "fields": {
       "email": "driver4@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "driver",
       "is_staff": false,
       "is_active": true,
@@ -148,7 +148,7 @@
     "pk": "5d556555-4555-4555-9555-555555555555",
     "fields": {
       "email": "driver5@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "driver",
       "is_staff": false,
       "is_active": true,
@@ -164,7 +164,7 @@
     "pk": "1e116514-411a-4111-9111-111111111111",
     "fields": {
       "email": "staff1@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "staff",
       "is_staff": true,
       "is_active": true,
@@ -180,7 +180,7 @@
     "pk": "2e226524-422a-4222-9222-222222222222",
     "fields": {
       "email": "staff2@example.com",
-      "password": "pbkdf2_sha256$1200000$rYtocOrwB5hhqNmH8YJ39e$m+jXBrYPiUZrr0ArZ4aDfusxG1bhbY4bYDCdEbjYADs=",
+      "password": "pbkdf2_sha256$1200000$BJ0tRRMPZ5QqaJMJlpPYLa$VMVhElaL3UZWBNdkHSlskEIgOmxpGO1WibuzI1M6KpE=",
       "role": "staff",
       "is_staff": true,
       "is_active": true,
