@@ -1,7 +1,9 @@
 # Taxi Service Analytics & Live Monitoring
 
-Проєкт являє собою комплексну систему для таксопарку, що складається з двох основних модулів: **Live Map** (моніторинг водіїв у реальному часі), **Analytics Dashboard** (аналіз маршрутів та теплових карт) та **Taxi Map** (симуляція роботи служби таксі).
-
+Проєкт являє собою комплексну систему для таксопарку, що складається з трьох основних модулів: 
+* **Live Map** - моніторинг водіїв у реальному часі
+* **Analytics Map** - аналіз маршрутів та теплових карт
+* **Taxi Map** - симуляція замовлення таксі
 
 
 ## 🚀 Основні можливості
@@ -14,26 +16,26 @@
 
 ### 📊 Analytics Dashboard
 * **Виділення:** Інструмент виділення довільних областей на карті.
-* **Аналітика:** Відображення топових маршрутів у вибраній зоні.
+* **Аналітика:** Аналітика маршрутів та швидкості.
 * **Теплові карти:** Візуалізація гарячих точок активності (Heatmaps).
 * **Перехрестя:** Розрахунок та візуалізація точок перетину маршрутів.
 
 ## 🛠 Технологічний стек
 
-* **Backend:** Django, Django REST Framework, Django Channels.
-* **Frontend:** TypeScript, Leaflet.js, Bootstrap 5, Vite.
-* **Database:** PostgreSQL (з підтримкою PostGIS).
-* **Maps:** OpenStreetMap (CartoDB tiles).
+* **Backend:** Django, DRF, Django Channels, Daphne, WebSockets, ASGI.
+* **Frontend:** TypeScript, Leaflet, Bootstrap 5, Vite, NPM.
+* **Database:** PostGIS, Redis.
+* **Maps:** GeoJSON, Nominatim, OSRM, CartoDB.
 
 ## 📂 Структура проєкту
 
 ```text
-├── taxi_service/        # Конфігурація Django проєкту
-├── rides/               # Логіка Live-моніторингу
-├── analytics/           # Аналітичний модуль (маршрути, heatmaps)
-├── static/              # Спільні статичні ресурси
-├── templates/           # Базові та специфічні Django шаблони
-└── assets/              # TypeScript файли та конфігурація Vite
+├── accounts/        # Кастомні юзери та профілі, oauth
+├── assets/          # TypeScript файли та конфігурація Vite
+├── rides/           # Логіка моніторінгу та статистики
+├── vehicles/        # База автомобілів (fleet)
+├── templates/       # Базові та специфічні Django шаблони
+└── static/          # Статичні ресурси
 ```
 ## ⚙️ Встановлення
 
